@@ -24,10 +24,11 @@ if 'session_id' not in st.session_state:
 # Display chat messages
 elif hasattr(st.session_state.run, 'status') and st.session_state.run.status == 'completed':
     st.session_state.messages = client.beta.threads.messages.list(thread_id=st.session_state.thread.id)
-    for message in reversed(st.session_state.messages.data):
-        if message.role in ['user', 'assistant']:
-            for content_part in message.content:
-                st.markdown(content_part.text.value)
+    st.write(st.session_state.messages.data)
+    # for message in reversed(st.session_state.messages.data):
+    #     if message.role in ['user', 'assistant']:
+    #         for content_part in message.content:
+    #             st.markdown(content_part.text.value)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
