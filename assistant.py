@@ -8,14 +8,7 @@ def displayMessage(role, content):
     with st.chat_message(role):
         messages = content.split('```')
         for message in messages:
-            st.text(message)
-            st.text(f'Message begins with plaintext: {message[:9] == "plaintext"}')
-            if message[:9] == 'plaintext':
-                message = message[10:]
-
-            st.text(f'Message begins with digraph: {message[:7] == "digraph"}')
-            st.text(f'Message ends with closing curly bracket: {message[-2] == "}"}')
-            if message[:7] == 'digraph' and message[-2] == '}':
+            if message.find('digraph DFA {') > -1 and message[-2] == '}':
                 st.graphviz_chart(message)
             else:
                 st.write(message)
