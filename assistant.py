@@ -70,41 +70,41 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                     run_id = run.id
                 )
         
-        if run.status == 'requires_action':
-            # Retrieve tool call
-            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            if run.status == 'requires_action':
+                # Retrieve tool call
+                tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
 
-            # Extract function name and arguments
-            # function = tool_call.function.name
-            args = json.loads(tool_call.function.arguments)
-            reponse_message['diagram'] = args['dot_script']
+                # Extract function name and arguments
+                # function = tool_call.function.name
+                args = json.loads(tool_call.function.arguments)
+                reponse_message['diagram'] = args['dot_script']
 
-            # Call function
-            # response = globals()[function](**args)
+                # Call function
+                # response = globals()[function](**args)
 
-            # Submit output from function call
-            run = client.beta.threads.runs.submit_tool_outputs(
-                thread_id = st.session_state.thread.id,
-                run_id = run.id,
-                tool_outputs = [
-                    {
-                        'tool_call_id': tool_call.id,
-                        'output': 'An image of the state diagram is generated'
-                    }
-                ]
-            )
+                # Submit output from function call
+                run = client.beta.threads.runs.submit_tool_outputs(
+                    thread_id = st.session_state.thread.id,
+                    run_id = run.id,
+                    tool_outputs = [
+                        {
+                            'tool_call_id': tool_call.id,
+                            'output': 'An image of the state diagram is generated'
+                        }
+                    ]
+                )
 
-    # Retrieve message added by the assistant
-    response = client.beta.threads.messages.list(
-        thread_id = st.session_state.thread.id
-    )
-    reponse_message['content'] = response.data[0].content[0].text.value
+        # Retrieve message added by the assistant
+        response = client.beta.threads.messages.list(
+            thread_id = st.session_state.thread.id
+        )
+        reponse_message['content'] = response.data[0].content[0].text.value
 
-    # Display assistant message in chat message container
-    with st.chat_message('assistant'):
-        if reponse_message['diagram'] != '':
-            st.graphviz_chart(reponse_message['diagram'])
-        st.markdown(reponse_message['content'])
+        # Display assistant message in chat message container
+        with st.chat_message('assistant'):
+            if reponse_message['diagram'] != '':
+                st.graphviz_chart(reponse_message['diagram'])
+            st.markdown(reponse_message['content'])
 
-    # Add assistant message to chat history
-    st.session_state.messages.append(reponse_message)
+        # Add assistant message to chat history
+        st.session_state.messages.append(reponse_message)
