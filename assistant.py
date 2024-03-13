@@ -38,7 +38,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         st.markdown(prompt)
     
     # Add user message to chat history
-    st.session_state.messages.append({'role': 'user', 'content': prompt})
+    st.session_state.messages.append({'role': 'user', 'content': prompt, 'diagram': ''})
     
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
