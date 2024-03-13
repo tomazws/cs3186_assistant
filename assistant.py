@@ -1,5 +1,6 @@
 import json
 import uuid
+import time
 import streamlit as st
 import graphviz
 from openai import OpenAI
@@ -14,16 +15,19 @@ client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 # Initialize session state variables
 if 'session_id' not in st.session_state:
     st.session_state.session_id = str(uuid.uuid4())
-    st.session_state.assistant = client.beta.assistants.retrieve('asst_G8iILCF0d74d4y3IW4nKNRbn')
+    st.session_state.assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT'])
+    st.session_state.thread = client.beta.threads.create(metadata={'session_id': st.session_state.session_id})
     st.session_state.messages = []
     st.session_state.run = {'status': None}
-    st.session_state.thread = client.beta.threads.create(metadata={'session_id': st.session_state.session_id})
+    st.session_state.retry_error = 0
 
 # Display chat messages
 elif hasattr(st.session_state.run, 'status') and st.session_state.run.status == 'completed':
     st.session_state.messages = client.beta.threads.messages.list(thread_id=st.session_state.thread.id)
-    for message in st.session_state.messages.data:
-        st.markdown(message.content)
+    for message in reversed(st.session_state.messages.data):
+        if message.role in ['user', 'assistant']:
+            for content_part in message.content:
+                st.markdown(content_part.text.value)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
@@ -42,10 +46,35 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         thread_id=st.session_state.thread.id,
         assistant_id=st.session_state.assistant.id
     )
+    if st.session_state.retry_error < 3:
+        time.sleep(1)
+        st.rerun()
 
 # Handle run status
-if hasattr(st.session_state.run, 'status') and st.session_state.run.status != 'completed':
-    st.session_state.run = client.beta.threads.runs.retrieve(
-        thread_id=st.session_state.thread.id,
-        run_id=st.session_state.run.id
-    )
+if hasattr(st.session_state.run, 'status'):
+    if st.session_state.run.status == 'running':
+        with st.chat_message('assistant'):
+            st.write('Thinking ...')
+        if st.session_state.retry_error < 3:
+            time.sleep(1)
+            st.rerun()
+    
+    elif st.sessioin_state.run.status == 'failed':
+        st.session_state.retry_error += 1
+        with st.chat_message('assistant'):
+            if st.session_state.retry_error < 3:
+                st.write('My mind went blank. Let me try again ...')
+                time.sleep(3)
+                st.rerun()
+            else:
+                st.error('FAILED: I am unable to process your request. Please try again later.')
+
+    elif st.session_state.run.status != 'completed':
+        st.session_state.run = client.beta.threads.runs.retrieve(
+            thread_id=st.session_state.thread.id,
+            run_id=st.session_state.run.id
+        )
+        if st.session_state.retry_error < 3:
+            time.sleep(3)
+            st.rerun()
+
