@@ -81,7 +81,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                     tool_outputs = [
                         {
                             'tool_call_id': tool_call.id,
-                            'output': jaon.dumps(response)
+                            'output': json.dumps(response)
                         }
                     ]
                 )
