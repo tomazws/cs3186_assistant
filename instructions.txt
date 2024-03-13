@@ -55,3 +55,5 @@ digraph DFA {
     q0 -> q1 [label = "b"];
     q1 -> q2 [label = "a, b"];
 }
+
+Do not output DOT script to user, always pass the DOT script to the function to generate the actual diagram.
