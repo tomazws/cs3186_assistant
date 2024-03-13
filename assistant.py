@@ -66,7 +66,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             args = json.loads(tool_call.function.arguments)
             st.write(function)
             st.write(args)
-            task = createDiagram(**args)
+            task = globals()[function](**args)
         else:
             # Retrieve message added by the assistant
             response = client.beta.threads.messages.list(
