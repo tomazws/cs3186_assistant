@@ -8,6 +8,8 @@ def displayMessage(role, content):
     with st.chat_message(role):
         messages = content.split('```')
         for message in messages:
+            if message.find('digraph DFA {') > -1:
+                st.text('TRUE')
             if message.find('digraph DFA {') > -1 and message[-2] == '}':
                 st.graphviz_chart(message)
             else:
