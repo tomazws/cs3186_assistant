@@ -27,7 +27,7 @@ if 'thread' not in st.session_state:
 # Initialize chat messages
 for message in st.session_state.messages:
     if message['role'] == 'dot_script':
-        st.graphviz_chart(message['diagram'])
+        st.graphviz_chart(message['content'])
     else:
         with st.chat_message(message['role']):
             st.markdown(message['content'])
