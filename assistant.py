@@ -4,7 +4,7 @@ import graphviz
 import time
 import json
 
-# Custom functions
+# Custom function to create a diagram
 # def createDiagram(dot_script):
 #     with st.chat_message('dot_script'):
 #         st.graphviz_chart(dot_script)
@@ -53,6 +53,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         assistant_id = assistant.id
     )
 
+    # Initialize response message with 3 components
     reponse_message = {
         'role': 'assistant',
         'content': '',
@@ -77,10 +78,15 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 # Extract function name and arguments
                 # function = tool_call.function.name
                 args = json.loads(tool_call.function.arguments)
-                reponse_message['diagram'] = args['dot_script']
 
                 # Call function
                 # response = globals()[function](**args)
+                
+                # Instead of calling the function, I just
+                # shove the dot script into the response
+                # message under 'diagram'. And then fake
+                # the function response output to OpenAI
+                reponse_message['diagram'] = args['dot_script']
 
                 # Submit output from function call
                 run = client.beta.threads.runs.submit_tool_outputs(
