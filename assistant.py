@@ -7,7 +7,7 @@ from openai import OpenAI
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 
 # Retrieve the assistant you want to use
-assistant = openai_client.beta.assistants.retrieve('asst_G8iILCF0d74d4y3IW4nKNRbn')
+assistant = client.beta.assistants.retrieve('asst_G8iILCF0d74d4y3IW4nKNRbn')
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
