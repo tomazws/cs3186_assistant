@@ -42,3 +42,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         thread_id=st.session_state.thread.id,
         assistant_id=st.session_state.assistant.id
     )
+
+# Handle run status
+if hasattr(st.session_state.run, 'status') and st.session_state.run.status != 'completed':
+    st.spinner('Generating your response...')
+    st.session_state.run = client.beta.threads.runs.retrieve(
+        thread_id=st.session_state.thread.id,
+        run_id=st.session_state.run.id
+    )
