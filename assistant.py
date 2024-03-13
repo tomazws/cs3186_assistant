@@ -46,9 +46,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         thread_id=st.session_state.thread.id,
         assistant_id=st.session_state.assistant.id
     )
-    if st.session_state.retry_error < 3:
-        time.sleep(1)
-        st.rerun()
 
 # Handle run status
 if hasattr(st.session_state.run, 'status'):
@@ -56,26 +53,9 @@ if hasattr(st.session_state.run, 'status'):
     if st.session_state.run.status == 'running':
         with st.chat_message('assistant'):
             st.write('Thinking ...')
-        if st.session_state.retry_error < 3:
-            time.sleep(1)
-            st.rerun()
-    
-    elif st.session_state.run.status == 'failed':
-        st.session_state.retry_error += 1
-        with st.chat_message('assistant'):
-            if st.session_state.retry_error < 3:
-                st.write('My mind went blank. Let me try again ...')
-                time.sleep(3)
-                st.rerun()
-            else:
-                st.error('FAILED: I am unable to process your request. Please try again later.')
 
     elif st.session_state.run.status != 'completed':
         st.session_state.run = client.beta.threads.runs.retrieve(
             thread_id=st.session_state.thread.id,
             run_id=st.session_state.run.id
         )
-        if st.session_state.retry_error < 3:
-            time.sleep(3)
-            st.rerun()
-
