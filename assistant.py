@@ -11,12 +11,11 @@ st.subheader('Ask me anything about CS 3186')
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
+assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT'])
 
 # Initialize session state variables
-if 'session_id' not in st.session_state:
-    st.session_state.session_id = str(uuid.uuid4())
-    st.session_state.assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT'])
-    st.session_state.thread = client.beta.threads.create(metadata={'session_id': st.session_state.session_id})
+if 'thread' not in st.session_state:
+    st.session_state.thread = client.beta.threads.create()
     st.session_state.messages = []
 
 # Initialize chat messages
@@ -36,28 +35,28 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
-        thread_id=st.session_state.thread.id,
-        role='user',
-        content=prompt
+        thread_id = st.session_state.thread.id,
+        role = 'user',
+        content = prompt
     )
 
     with st.spinner('Thinking ...'):
         # Run the assistant API
         run = client.beta.threads.runs.create(
-            thread_id=st.session_state.thread.id,
-            assistant_id=st.session_state.assistant.id
+            thread_id = st.session_state.thread.id,
+            assistant_id = assistant.id
         )
 
         while run.status != 'completed':
             time.sleep(1)
             run = client.beta.threads.runs.retrieve(
-                thread_id=st.session_state.thread.id,
-                run_id=run.id
+                thread_id = st.session_state.thread.id,
+                run_id = run.id
             )
         
         # Retrieve messages added by the assistant
         response = client.beta.threads.messages.list(
-            thread_id=st.session_state.thread.id
+            thread_id = st.session_state.thread.id
         )
 
         messages = response.data
