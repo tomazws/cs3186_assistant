@@ -24,3 +24,21 @@ elif hasattr(st.session_state.run, 'status') and st.session_state.run.status == 
     st.session_state.messages = client.beta.threads.messages.list(thread_id=st.session_state.thread.id)
     for message in st.session_state.messages.data:
         st.markdown(message.content)
+
+# Chat input
+if prompt := st.chat_input('Ask me anything about CS 3186'):
+    with st.chat_message('user'):
+        st.markdown(prompt)
+    
+    message_data = {
+        'thread_id': st.session_state.thread.id,
+        'role': 'user',
+        'content': prompt
+    }
+
+    st.session_state.messages = client.beta.threads.messages.create(**message_data)
+
+    st.session_state.run = client.beta.threads.runs.create(
+        thread_id=st.session_state.thread.id,
+        assistant_id=st.session_state.assistant.id
+    )
