@@ -8,7 +8,7 @@ import json
 def createDiagram(dot_script):
     st.graphviz_chart(dot_script)
     st.session_state.messages.append({'role': 'dfa', 'content': dot_script})
-    return 'An image of the diagram is created'
+    return f'An image of the diagram is created with {dot_script}'
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
