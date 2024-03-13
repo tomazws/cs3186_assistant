@@ -88,15 +88,15 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 ]
             )
 
-        # Retrieve message added by the assistant
-        response = client.beta.threads.messages.list(
-            thread_id = st.session_state.thread.id
-        )
-        message = response.data[0].content[0].text.value
+    # Retrieve message added by the assistant
+    response = client.beta.threads.messages.list(
+        thread_id = st.session_state.thread.id
+    )
+    message = response.data[0].content[0].text.value
 
-        # Display assistant message in chat message container
-        with st.chat_message('assistant'):
-            st.markdown(message)
-    
-        # Add assistant message to chat history
-        st.session_state.messages.append({'role': 'assistant', 'content': message})
+    # Display assistant message in chat message container
+    with st.chat_message('assistant'):
+        st.markdown(message)
+
+    # Add assistant message to chat history
+    st.session_state.messages.append({'role': 'assistant', 'content': message})
