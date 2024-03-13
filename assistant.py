@@ -66,10 +66,12 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         message_blocks = message.split('```')
 
         for message_block in message_blocks:
+            st.write('---------')
             if message_block[:7] == 'digraph' and message_block[-1] == '}':
                 st.graphviz_chart(message_block)
             else:
                 st.write(message_block)
+            st.write('---------')
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
