@@ -21,8 +21,8 @@ if 'session_id' not in st.session_state:
 
 # Initialize chat messages
 for message in st.session_state.messages:
-    if message.role in ['user', 'assistant']:
-        with st.chat_message(message.role):
+    if message['role'] in ['user', 'assistant']:
+        with st.chat_message(message['role']):
             st.markdown(message.content[0].text.value)
 
 # Chat input
