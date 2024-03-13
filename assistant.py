@@ -95,7 +95,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                     tool_outputs = [
                         {
                             'tool_call_id': tool_call.id,
-                            'output': 'An image of the state diagram has already been outputted'
+                            'output': '''
+                                A state diagram has already been outputted to user.
+                                Please explain the diagram, each state and each
+                                transition, in the next message.
+                            '''
                         }
                     ]
                 )
