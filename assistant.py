@@ -26,7 +26,8 @@ elif hasattr(st.session_state.run, 'status') and st.session_state.run.status == 
     st.session_state.messages = client.beta.threads.messages.list(thread_id=st.session_state.thread.id)
     for message in reversed(st.session_state.messages.data):
         if message.role in ['user', 'assistant']:
-            st.markdown({'role': 'user', 'message': message.content[0].text.value})
+            with st.chat_message(message.role):
+                st.markdown(message.content[0].text.value)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
