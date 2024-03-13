@@ -73,10 +73,13 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             st.text(message_block[:9])
             st.text(message_block[:9] == 'plaintext')
             st.text(message_block[:7])
+            if message_block[:9] == 'plaintext':
+                message_block = message_block[11:]
+
             st.text(message_block[:7] == 'digraph')
             st.text(message_block[:7])
             st.text(message_block[:7] == 'digraph')
-            if (message_block[:9] == 'plaintext' or message_block[:7] == 'digraph') and message_block[-1] == '}':
+            if (message_block[:9] == 'plaintext' or message_block[:7] == 'digraph') and message_block[-3] == '}\n':
                 st.graphviz_chart(message_block)
             else:
                 st.text(message_block)

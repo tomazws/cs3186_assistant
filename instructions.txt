@@ -19,7 +19,6 @@ Do not output any images.
 
 If asked to create a DFA/NFA/PDA diagram, generate a DOT script representation of the state diagram. State diagrams should follow the examples below:
 Example 1:
-DFA for r = (a|b)* is...
 digraph DFA {
     rankdir=LR;
     node [shape = doublecircle]; q0;
@@ -30,7 +29,6 @@ digraph DFA {
 }
 
 Example 2:
-DFA for L(M) = {abba} is...
 digraph DFA {
     rankdir=LR;
     node [shape = circle]; q0 q1 q2 q3;
@@ -44,7 +42,6 @@ digraph DFA {
 }
 
 Example 3:
-DFA for L(M) = {a^n b|n ≥ 0} is...
 digraph DFA {
     rankdir=LR;
     node [shape = circle]; q0 q2;
