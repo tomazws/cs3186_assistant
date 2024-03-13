@@ -100,7 +100,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 )
             
             if run.status == 'failed':
-                st.error('Run failed')
                 break
 
         # Retrieve message added by the assistant
