@@ -66,4 +66,4 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             st.markdown(message)
     
         # Add assistant message to chat history
-        st.session_state.messages.append({'role': 'ai', 'content': message})
+        st.session_state.messages.append({'role': 'assistant', 'content': message})
