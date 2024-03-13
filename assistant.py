@@ -14,7 +14,6 @@ client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 
 # Initialize session state variables
 if 'session_id' not in st.session_state:
-    st.session_state.session_id = str(uuid.uuid4())
     st.session_state.assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT'])
     st.session_state.thread = client.beta.threads.create(metadata={'session_id': st.session_state.session_id})
     st.session_state.messages = []
