@@ -56,4 +56,4 @@ digraph DFA {
     q1 -> q2 [label = "a, b"];
 }
 
-Always place DOT scripts inside a code block. A code block must only contain the script and nothing else.
+Always place DOT scripts inside a code block.
