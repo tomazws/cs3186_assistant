@@ -55,7 +55,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
     reponse_message = {
         'role': 'assistant',
-        'content': ''
+        'content': '',
         'diagram': ''
     }
 
