@@ -2,6 +2,7 @@ import streamlit as st
 from openai import OpenAI
 import graphviz
 import time
+import json
 
 # Custom functions
 def createDiagram(dot_script):
@@ -60,8 +61,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             )
         
         if run.status == 'requires_action':
-            tool_call = run.required_action
-            st.write(tool_call)
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+            function = tool_call.function.name
+            args = json.loads(tool_call.function.arguments)
+            st.write(function)
+            st.write(args)
         else:
             # Retrieve message added by the assistant
             response = client.beta.threads.messages.list(
