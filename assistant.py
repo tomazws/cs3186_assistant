@@ -64,7 +64,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                     run_id = run.id
                 )
         
-            args = ''
+            diagram = ''
             if run.status == 'requires_action':
                 # Retrieve tool call
                 tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
@@ -72,6 +72,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 # Extract function name and arguments
                 # function = tool_call.function.name
                 args = json.loads(tool_call.function.arguments)
+                diagram = args['dot_script']
 
                 # Call function
                 # response = globals()[function](**args)
@@ -105,9 +106,9 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
-            if args != '':
-                st.graphviz_chart(args)
+            if diagram != '':
+                st.graphviz_chart(diagram)
             st.markdown(message)
 
         # Add assistant message to chat history
-        st.session_state.messages.append({'role': 'assistant', 'content': message, 'diagram': args})
+        st.session_state.messages.append({'role': 'assistant', 'content': message, 'diagram': diagram})
