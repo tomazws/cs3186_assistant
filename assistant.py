@@ -7,7 +7,7 @@ import json
 # Custom functions
 def createDiagram(dot_script):
     st.graphviz_chart(dot_script)
-    st.session_state.messages.append({'role': 'dfa', 'content': dot_script})
+    st.session_state.messages.append({'role': 'dot_script', 'content': dot_script})
     return f'An image of the diagram is created with {dot_script}'
 
 # Create title and subheader for the Streamlit page
@@ -25,11 +25,8 @@ if 'thread' not in st.session_state:
 
 # Initialize chat messages
 for message in st.session_state.messages:
-    if message['role'] in ['user', 'assistant']:
-        with st.chat_message(message['role']):
-            st.markdown(message['content'])
-    elif message['role'] == 'dfa':
-        st.graphviz_chart(message['content'])
+    with st.chat_message(message['role']):
+        st.markdown(message['content'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
