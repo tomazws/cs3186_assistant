@@ -52,6 +52,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
 # Handle run status
 if hasattr(st.session_state.run, 'status'):
+    st.write(st.session_state.run.status)
     if st.session_state.run.status == 'running':
         with st.chat_message('assistant'):
             st.write('Thinking ...')
