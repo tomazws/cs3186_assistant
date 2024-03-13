@@ -1,9 +1,7 @@
-import json
-import uuid
-import time
 import streamlit as st
-import graphviz
 from openai import OpenAI
+import graphviz
+import time
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
