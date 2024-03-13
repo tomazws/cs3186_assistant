@@ -14,6 +14,7 @@ client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 # Retrieve the assistant you want to use
 assistant = client.beta.assistants.retrieve('asst_G8iILCF0d74d4y3IW4nKNRbn')
 
+# Create a new thread
 thread = client.beta.threads.create()
 st.session_state.thread_id = thread.id
 
@@ -21,6 +22,13 @@ st.session_state.thread_id = thread.id
 if 'messages' not in st.session_state:
     st.session_state.messages = [{'role': 'system', 'content': prompts.get_instructions()}]
 
+# Display chat messages from history on app rerun (Skipping 1st element - system message)
+for message in st.session_state.messages[1:]:
+    with st.chat_message(message['role']):
+        if (message['content'][:7] == 'digraph' and message['content'][-1] == '}'):
+            st.graphviz_chart(message['content'])
+        else:
+            st.markdown(message['content'])
 
 # def createDiagram(dot_script):
 #    # st.markdown(dot_script)
@@ -53,24 +61,10 @@ if 'messages' not in st.session_state:
 
 # st.title('CS 3186 Student Assistant Chatbot')
 
-# # Set OpenAI API key from Streamlit secrets
-# client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-
 # # Set a default model
 # if 'openai_model' not in st.session_state:
 #     st.session_state['openai_model'] = 'gpt-3.5-turbo'
 
-# # Initialize chat history
-# if 'messages' not in st.session_state:
-#     st.session_state.messages = [{'role': 'system', 'content': prompts.get_instructions()}]
-
-# # Display chat messages from history on app rerun (Skipping 1st element - system message)
-# for message in st.session_state.messages[1:]:
-#     with st.chat_message(message['role']):
-#         if (message['content'][:7] == 'digraph' and message['content'][-1] == '}'):
-#             st.graphviz_chart(message['content'])
-#         else:
-#             st.markdown(message['content'])
 
 # # React to user input
 # if prompt := st.chat_input('Ask me anything about CS 3186'):
