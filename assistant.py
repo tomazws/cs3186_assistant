@@ -53,6 +53,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         assistant_id = assistant.id
     )
 
+    diagram = ''
     # Wait for the run to complete
     with st.spinner('Thinking ...'):
         while run.status != 'completed':
@@ -64,7 +65,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                     run_id = run.id
                 )
         
-            diagram = ''
             if run.status == 'requires_action':
                 # Retrieve tool call
                 tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
@@ -72,7 +72,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 # Extract function name and arguments
                 # function = tool_call.function.name
                 args = json.loads(tool_call.function.arguments)
-                st.write(args)
                 diagram = args['dot_script']
 
                 # Call function

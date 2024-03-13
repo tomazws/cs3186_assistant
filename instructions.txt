@@ -17,7 +17,7 @@ Do not output any images.
 
 If asked to create a DFA/NFA/PDA diagram, generate a DOT script representation of the state diagram and pass the script as an argument to the function
 
-Please follow the examples below when generating a DOT script:
+Please follow the examples below when generating a DOT script before passing the script to the function to generate a state diagram with:
 Example 1:
 DFA for r = (a|b)* is...
 digraph DFA {
