@@ -53,30 +53,48 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         )
 
         # Wait for the run to complete
-        while run.status == 'queued' or run.status == 'in_progress':
-            time.sleep(0.5)
-            run = client.beta.threads.runs.retrieve(
-                thread_id = st.session_state.thread.id,
-                run_id = run.id
-            )
-        
-        if run.status == 'requires_action':
-            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
-            function = tool_call.function.name
-            args = json.loads(tool_call.function.arguments)
-            st.write(function)
-            st.write(args)
-            task = globals()[function](**args)
-        else:
-            # Retrieve message added by the assistant
-            response = client.beta.threads.messages.list(
-                thread_id = st.session_state.thread.id
-            )
-            message = response.data[0].content[0].text.value
+        while run.status != 'completed':
+            
+            # Check the status of the run
+            while run.status == 'queued' or run.status == 'in_progress':
+                time.sleep(0.5)
+                run = client.beta.threads.runs.retrieve(
+                    thread_id = st.session_state.thread.id,
+                    run_id = run.id
+                )
+            
+            if run.status == 'requires_action':
+                # Retrieve tool call
+                tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
 
-            # Display assistant message in chat message container
-            with st.chat_message('assistant'):
-                st.markdown(message)
-        
-            # Add assistant message to chat history
-            st.session_state.messages.append({'role': 'assistant', 'content': message})
+                # Extract function name and arguments
+                function = tool_call.function.name
+                args = json.loads(tool_call.function.arguments)
+
+                # Call function
+                response = globals()[function](**args)
+
+                # Submit output from function call
+                run = client.beta.threads.runs.submit_tool_outputs(
+                    thread_id = st.session_state.thread.id,
+                    run_id = run.id,
+                    tool_outputs = [
+                        {
+                            'tool_call_id': tool_call.id,
+                            'output': jaon.dumps(response)
+                        }
+                    ]
+                )
+
+        # Retrieve message added by the assistant
+        response = client.beta.threads.messages.list(
+            thread_id = st.session_state.thread.id
+        )
+        message = response.data[0].content[0].text.value
+
+        # Display assistant message in chat message container
+        with st.chat_message('assistant'):
+            st.markdown(message)
+    
+        # Add assistant message to chat history
+        st.session_state.messages.append({'role': 'assistant', 'content': message})
