@@ -60,6 +60,8 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         )
         message = response.data[0].content[0].text.value
 
+        st.write(message)
+
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
             st.markdown(message)
