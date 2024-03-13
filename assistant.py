@@ -6,9 +6,9 @@ import json
 
 # Custom functions
 def createDiagram(dot_script):
-    st.graphviz_chart(dot_script)
-    with st.chat_message('⌾'):
-        st.session_state.messages.append({'role': 'dot_script', 'content': dot_script})
+    with st.chat_message('dot_script'):
+        st.graphviz_chart(dot_script)
+    st.session_state.messages.append({'role': 'dot_script', 'content': dot_script})
     return f'An image of the diagram is created with {dot_script}'
 
 # Create title and subheader for the Streamlit page
@@ -45,16 +45,15 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         content = prompt
     )
 
-    with st.spinner('Thinking ...'):
-        # Create a run to process the user message
-        run = client.beta.threads.runs.create(
-            thread_id = st.session_state.thread.id,
-            assistant_id = assistant.id
-        )
+    # Create a run to process the user message
+    run = client.beta.threads.runs.create(
+        thread_id = st.session_state.thread.id,
+        assistant_id = assistant.id
+    )
 
-        # Wait for the run to complete
-        while run.status != 'completed':
-            
+    # Wait for the run to complete
+    while run.status != 'completed':
+        with st.spinner('Thinking ...'):
             # Check the status of the run
             while run.status == 'queued' or run.status == 'in_progress':
                 time.sleep(0.5)
@@ -62,29 +61,29 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                     thread_id = st.session_state.thread.id,
                     run_id = run.id
                 )
-            
-            if run.status == 'requires_action':
-                # Retrieve tool call
-                tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
+        
+        if run.status == 'requires_action':
+            # Retrieve tool call
+            tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
 
-                # Extract function name and arguments
-                function = tool_call.function.name
-                args = json.loads(tool_call.function.arguments)
+            # Extract function name and arguments
+            function = tool_call.function.name
+            args = json.loads(tool_call.function.arguments)
 
-                # Call function
-                response = globals()[function](**args)
+            # Call function
+            response = globals()[function](**args)
 
-                # Submit output from function call
-                run = client.beta.threads.runs.submit_tool_outputs(
-                    thread_id = st.session_state.thread.id,
-                    run_id = run.id,
-                    tool_outputs = [
-                        {
-                            'tool_call_id': tool_call.id,
-                            'output': json.dumps(response)
-                        }
-                    ]
-                )
+            # Submit output from function call
+            run = client.beta.threads.runs.submit_tool_outputs(
+                thread_id = st.session_state.thread.id,
+                run_id = run.id,
+                tool_outputs = [
+                    {
+                        'tool_call_id': tool_call.id,
+                        'output': json.dumps(response)
+                    }
+                ]
+            )
 
         # Retrieve message added by the assistant
         response = client.beta.threads.messages.list(
