@@ -24,11 +24,9 @@ if 'session_id' not in st.session_state:
 # Display chat messages
 elif hasattr(st.session_state.run, 'status') and st.session_state.run.status == 'completed':
     st.session_state.messages = client.beta.threads.messages.list(thread_id=st.session_state.thread.id)
-    st.write(st.session_state.messages.data)
-    # for message in reversed(st.session_state.messages.data):
-    #     if message.role in ['user', 'assistant']:
-    #         for content_part in message.content:
-    #             st.markdown(content_part.text.value)
+    for message in reversed(st.session_state.messages.data):
+        if message.role in ['user', 'assistant']:
+            st.markdown({'role': 'user', 'message': message.content[0].text.value})
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
@@ -47,17 +45,12 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         thread_id=st.session_state.thread.id,
         assistant_id=st.session_state.assistant.id
     )
-    if st.session_state.retry_error < 3:
-        time.sleep(1)
-        st.rerun()
 
 # Handle run status
-if hasattr(st.session_state.run, 'status') and st.session_state.run.status != 'completed':
+if hasattr(st.session_state.run, 'status'):
+    while st.session_state.run.status != 'completed':
         st.session_state.run = client.beta.threads.runs.retrieve(
             thread_id=st.session_state.thread.id,
             run_id=st.session_state.run.id
         )
-        if st.session_state.retry_error < 3:
-            time.sleep(3)
-            st.rerun()
-
+        time.sleep(1)
