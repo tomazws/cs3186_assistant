@@ -112,9 +112,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
-            st.markdown(reponse_message['content'])
             if reponse_message['diagram'] != '':
                 st.graphviz_chart(reponse_message['diagram'])
+            st.markdown(reponse_message['content'])
 
         # Add assistant message to chat history
         st.session_state.messages.append(reponse_message)
+
+        reponse_message = {}
