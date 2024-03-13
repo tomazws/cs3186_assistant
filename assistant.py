@@ -41,12 +41,13 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     )
 
     with st.spinner('Thinking ...'):
-        # Run the assistant API
+        # Create a run to process the user message
         run = client.beta.threads.runs.create(
             thread_id = st.session_state.thread.id,
             assistant_id = assistant.id
         )
 
+        # Wait for the run to complete
         while run.status != 'completed':
             time.sleep(1)
             run = client.beta.threads.runs.retrieve(
@@ -54,13 +55,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 run_id = run.id
             )
         
-        # Retrieve messages added by the assistant
+        # Retrieve message added by the assistant
         response = client.beta.threads.messages.list(
             thread_id = st.session_state.thread.id
         )
-
-        messages = response.data
-        message = messages[0].content[0].text.value
+        message = response.data[0].content[0].text.value
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
