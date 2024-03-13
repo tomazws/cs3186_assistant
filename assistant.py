@@ -29,7 +29,7 @@ st.write(st.session_state.messages)
 # Initialize chat messages
 for message in st.session_state.messages:
     with st.chat_message(message['role']):
-        if message['diagram']:
+        if message['diagram'] != None:
             st.graphviz_chart(message['diagram'])
         st.markdown(message['content'])
 
@@ -104,7 +104,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
-            if response_message['diagram']:
+            if response_message['diagram'] != None:
                 st.graphviz_chart(response_message['diagram'])
             st.markdown(response_message['content'])
     
