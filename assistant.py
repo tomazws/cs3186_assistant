@@ -10,7 +10,7 @@ st.subheader('Ask me anything about CS 3186')
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
-assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT'])
+assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT2'])
 
 # Initialize session state variables
 if 'thread' not in st.session_state:
@@ -53,9 +53,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 thread_id = st.session_state.thread.id,
                 run_id = run.id
             )
-        
-        if run.status == 'failed':
-            break
 
         # Retrieve message added by the assistant
         response = client.beta.threads.messages.list(
