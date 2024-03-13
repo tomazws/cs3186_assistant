@@ -27,7 +27,7 @@ if 'thread' not in st.session_state:
 # Initialize chat messages
 for message in st.session_state.messages:
     with st.chat_message(message['role']):
-        if message['diagram'] != None:
+        if message['diagram'] != '':
             st.graphviz_chart(message['diagram'])
         st.markdown(message['content'])
 
@@ -55,8 +55,8 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
     response_message = {
         'role': 'assistant',
-        'content': None,
-        'diagram': None
+        'content': '',
+        'diagram': ''
     }
 
     # Wait for the run to complete
@@ -102,7 +102,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
-            if response_message['diagram'] != None:
+            if response_message['diagram'] != '':
                 st.graphviz_chart(response_message['diagram'])
             st.markdown(response_message['content'])
     
