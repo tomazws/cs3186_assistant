@@ -3,10 +3,15 @@ import streamlit as st
 import graphviz
 from openai import OpenAI
 
-st.title('CS 3186 Student Assistant Chatbot')
-
 # Set OpenAI API key from Streamlit secrets
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
+
+# Retrieve the assistant you want to use
+assistant = openai_client.beta.assistants.retrieve('asst_G8iILCF0d74d4y3IW4nKNRbn')
+
+# Create title and subheader for the Streamlit page
+st.title('CS 3186 Student Assistant Chatbot')
+st.subheader('Ask me anything about CS 3186')
 
 thread = client.beta.threads.create()
 st.write(thread)
