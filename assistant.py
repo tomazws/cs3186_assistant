@@ -13,6 +13,7 @@ def displayMessage(role, content):
                 st.graphviz_chart(message)
             else:
                 st.write(message)
+    st.write('')
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
