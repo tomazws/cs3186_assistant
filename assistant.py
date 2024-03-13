@@ -5,11 +5,11 @@ import time
 import json
 
 # Custom functions
-# def createDiagram(dot_script):
-#     with st.chat_message('dot_script'):
-#         st.graphviz_chart(dot_script)
-#     st.session_state.messages.append({'role': 'dot_script', 'content': dot_script})
-#     return dot_script
+def createDiagram(dot_script):
+    with st.chat_message('dot_script'):
+        st.graphviz_chart(dot_script)
+    st.session_state.messages.append({'role': 'dot_script', 'content': dot_script})
+    return dot_script
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
@@ -27,9 +27,10 @@ if 'thread' not in st.session_state:
 # Initialize chat messages
 for message in st.session_state.messages:
     with st.chat_message(message['role']):
-        if message['diagram'] != '':
-            st.graphviz_chart(message['diagram'])
-        st.markdown(message['content'])
+        if message['role'] == 'dot_script':
+            st.graphviz_chart(message['content'])
+        else:
+            st.markdown(message['content'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
@@ -53,12 +54,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         assistant_id = assistant.id
     )
 
-    response_message = {
-        'role': 'assistant',
-        'content': '',
-        'diagram': ''
-    }
-
     # Wait for the run to complete
     while run.status != 'completed':
         with st.spinner('Thinking ...'):
@@ -75,12 +70,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
 
             # Extract function name and arguments
-            # function = tool_call.function.name
+            function = tool_call.function.name
             args = json.loads(tool_call.function.arguments)
-            response_message['diagram'] = args['dot_script']
 
             # Call function
-            # response = globals()[function](**args)
+            response = globals()[function](**args)
 
             # Submit output from function call
             run = client.beta.threads.runs.submit_tool_outputs(
@@ -89,7 +83,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 tool_outputs = [
                     {
                         'tool_call_id': tool_call.id,
-                        'output': 'An image of the state diagram is generated'
+                        'output': json.dumps(response)
                     }
                 ]
             )
@@ -98,13 +92,11 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         response = client.beta.threads.messages.list(
             thread_id = st.session_state.thread.id
         )
-        response_message['content'] = response.data[0].content[0].text.value
+        message = response.data[0].content[0].text.value
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
-            if response_message['diagram'] != '':
-                st.graphviz_chart(response_message['diagram'])
-            st.markdown(response_message['content'])
+            st.markdown(message)
     
         # Add assistant message to chat history
-        st.session_state.messages.append(response_message)
+        st.session_state.messages.append({'role': 'assistant', 'content': message})
