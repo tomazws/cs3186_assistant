@@ -4,6 +4,9 @@ import graphviz
 import time
 import json
 
+def displayMessage(role, content):
+    messages = content.split('```')
+
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
@@ -63,7 +66,10 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         message_blocks = message.split('```')
 
         for message_block in message_blocks:
-            st.write(message_block)
+            if message_block[:7] == 'digraph' and message_block[-1] == '}':
+                st.graphviz_chart(message_block)
+            else:
+                st.write(message_block)
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
