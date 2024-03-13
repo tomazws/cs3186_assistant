@@ -9,8 +9,7 @@ def displayMessage(role, content):
         messages = content.split('```')
         for message in messages:
             if message.find('digraph DFA {') > -1 and message[-2] == '}':
-                message = message[message.find('digraph DFA {') + 1:]
-                st.text(message)
+                message = message[message.find('digraph DFA {'):]
                 st.graphviz_chart(message)
             else:
                 st.write(message)
