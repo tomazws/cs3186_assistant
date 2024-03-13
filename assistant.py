@@ -41,7 +41,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         content=prompt
     )
 
-    width st.spinner('Thinking ...'):
+    with st.spinner('Thinking ...'):
         # Run the assistant API
         run = client.beta.threads.runs.create(
             thread_id=st.session_state.thread.id,
