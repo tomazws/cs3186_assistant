@@ -54,7 +54,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
         # Wait for the run to complete
         while run.status == 'queued' or run.status == 'in_progress':
-        #while run.status != 'completed' and run.status != 'requires_action':
             time.sleep(0.5)
             run = client.beta.threads.runs.retrieve(
                 thread_id = st.session_state.thread.id,
@@ -67,7 +66,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
             args = json.loads(tool_call.function.arguments)
             st.write(function)
             st.write(args)
-            #task = 
+            task = createDiagram(**args)
         else:
             # Retrieve message added by the assistant
             response = client.beta.threads.messages.list(
