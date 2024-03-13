@@ -5,7 +5,19 @@ import time
 import json
 
 def displayMessage(role, content):
-    messages = content.split('```')
+    with st.chat_message(role):
+        messages = content.split('```')
+        for message in messages:
+            # st.text(f'Message begins with plaintext: {message[:9] == "plaintext"}')
+            if message[:9] == 'plaintext':
+                message = message[10:]
+
+            # st.text(f'Message begins with digraph: {message[:7] == "digraph"}')
+            # st.text(f'Message ends with closing curly bracket: {message[-2] == "}"}')
+            if message[:7] == 'digraph' and message[-2] == '}':
+                st.graphviz_chart(message)
+            else:
+                st.write(message)
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
@@ -22,8 +34,7 @@ if 'thread' not in st.session_state:
 
 # Initialize chat messages
 for message in st.session_state.messages:
-    with st.chat_message(message['role']):
-        st.markdown(message['content'])
+    displayMessage(message['role'], message['content'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
@@ -63,29 +74,8 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         )
         message = response.data[0].content[0].text.value
 
-        st.text(response.data[0].content[0].text)
-
-        message_blocks = message.split('```')
-
-        for message_block in message_blocks:
-            st.text('---------')
-            st.text(len(message_block))
-            st.text(f'Message begins with plaintext: {message_block[:9] == "plaintext"}')
-            if message_block[:9] == 'plaintext':
-                message_block = message_block[10:]
-
-            st.text(f'Message begins with digraph: {message_block[:7] == "digraph"}')
-            st.text(f'Message ends with closing curly bracket: {message_block[-2] == "}"}')
-            if message_block[:7] == 'digraph' and message_block[-2] == '}':
-                st.text('graphviz')
-                st.graphviz_chart(message_block)
-            else:
-                st.text(message_block)
-            st.text('---------')
-
         # Display assistant message in chat message container
-        with st.chat_message('assistant'):
-            st.markdown(message)
+        displayMessage('assistant', message)
             
         # Add assistant message to chat history
         st.session_state.messages.append({'role': 'assistant', 'content': message})
