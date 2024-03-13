@@ -7,7 +7,8 @@ import json
 # Custom functions
 def createDiagram(dot_script):
     st.graphviz_chart(dot_script)
-    st.session_state.messages.append({'role': 'dot_script', 'content': dot_script})
+    with st.chat_message('⌾'):
+        st.session_state.messages.append({'role': 'dot_script', 'content': dot_script})
     return f'An image of the diagram is created with {dot_script}'
 
 # Create title and subheader for the Streamlit page
