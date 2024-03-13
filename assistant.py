@@ -3,6 +3,12 @@ from openai import OpenAI
 import graphviz
 import time
 
+# Custom functions
+def createDiagram(dot_script):
+    with st.chat_message('assistant'):
+        st.graphviz_chart(dot_script)
+    return 'An image of the diagram is created'
+
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
@@ -46,22 +52,25 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         )
 
         # Wait for the run to complete
-        while run.status != 'completed':
-            time.sleep(1)
+        while run.status != 'completed' and run.status != 'requires_action':
+            time.sleep(0.5)
             run = client.beta.threads.runs.retrieve(
                 thread_id = st.session_state.thread.id,
                 run_id = run.id
             )
         
-        # Retrieve message added by the assistant
-        response = client.beta.threads.messages.list(
-            thread_id = st.session_state.thread.id
-        )
-        message = response.data[0].content[0].text.value
+        if run.status == 'requires_action':
+            continue
+        else:
+            # Retrieve message added by the assistant
+            response = client.beta.threads.messages.list(
+                thread_id = st.session_state.thread.id
+            )
+            message = response.data[0].content[0].text.value
 
-        # Display assistant message in chat message container
-        with st.chat_message('assistant'):
-            st.markdown(message)
-    
-        # Add assistant message to chat history
-        st.session_state.messages.append({'role': 'assistant', 'content': message})
+            # Display assistant message in chat message container
+            with st.chat_message('assistant'):
+                st.markdown(message)
+        
+            # Add assistant message to chat history
+            st.session_state.messages.append({'role': 'assistant', 'content': message})
