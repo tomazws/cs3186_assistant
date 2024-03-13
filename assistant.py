@@ -67,6 +67,8 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
         for message_block in message_blocks:
             st.write('---------')
+            st.write(len(message_block))
+            st.write(message_block[:7] == 'digraph')
             if message_block[:7] == 'digraph' and message_block[-1] == '}':
                 st.graphviz_chart(message_block)
             else:
