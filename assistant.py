@@ -59,7 +59,7 @@ if hasattr(st.session_state.run, 'status'):
             time.sleep(1)
             st.rerun()
     
-    elif st.sessioin_state.run.status == 'failed':
+    elif st.session_state.run.status == 'failed':
         st.session_state.retry_error += 1
         with st.chat_message('assistant'):
             if st.session_state.retry_error < 3:
