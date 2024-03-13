@@ -23,7 +23,7 @@ if 'session_id' not in st.session_state:
 for message in st.session_state.messages:
     if message['role'] in ['user', 'assistant']:
         with st.chat_message(message['role']):
-            st.markdown(message['message'])
+            st.markdown(message['content'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
