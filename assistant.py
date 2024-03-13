@@ -40,6 +40,13 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Add user message to chat history
     st.session_state.messages.append({'role': 'user', 'content': prompt, 'diagram': ''})
     
+    # Initialize response message with 3 components
+    reponse_message = {
+        'role': 'assistant',
+        'content': '',
+        'diagram': ''
+    }
+
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
         thread_id = st.session_state.thread.id,
@@ -52,13 +59,6 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         thread_id = st.session_state.thread.id,
         assistant_id = assistant.id
     )
-
-    # Initialize response message with 3 components
-    reponse_message = {
-        'role': 'assistant',
-        'content': '',
-        'diagram': ''
-    }
 
     # Wait for the run to complete
     with st.spinner('Thinking ...'):
