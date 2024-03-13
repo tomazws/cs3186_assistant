@@ -26,10 +26,11 @@ if 'thread' not in st.session_state:
 
 # Initialize chat messages
 for message in st.session_state.messages:
-    with st.chat_message(message['role']):
-        if message['diagram'] != '':
-            st.graphviz_chart(message['diagram'])
-        st.markdown(message['content'])
+    if message['role'] == 'dot_script':
+        st.graphviz_chart(message['diagram'])
+    else:
+        with st.chat_message(message['role']):
+            st.markdown(message['content'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
@@ -38,14 +39,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         st.markdown(prompt)
     
     # Add user message to chat history
-    st.session_state.messages.append({'role': 'user', 'content': prompt, 'diagram': ''})
-    
-    # Initialize response message with 3 components
-    reponse_message = {
-        'role': 'assistant',
-        'content': '',
-        'diagram': ''
-    }
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
 
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
@@ -60,6 +54,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         assistant_id = assistant.id
     )
 
+    diagram = ''
     # Wait for the run to complete
     with st.spinner('Thinking ...'):
         while run.status != 'completed':
@@ -86,7 +81,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 # shove the dot script into the response
                 # message under 'diagram'. And then fake
                 # the function response output to OpenAI
-                reponse_message['diagram'] = args['dot_script']
+                diagram = args['dot_script']
 
                 # Submit output from function call
                 run = client.beta.threads.runs.submit_tool_outputs(
@@ -108,15 +103,13 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         response = client.beta.threads.messages.list(
             thread_id = st.session_state.thread.id
         )
-        reponse_message['content'] = response.data[0].content[0].text.value
+        message = response.data[0].content[0].text.value
 
         # Display assistant message in chat message container
         with st.chat_message('assistant'):
-            if reponse_message['diagram'] != '':
-                st.graphviz_chart(reponse_message['diagram'])
-            st.markdown(reponse_message['content'])
+            st.markdown(message)
+        if diagram != '':
+            st.graphviz_chart(diagram)
 
         # Add assistant message to chat history
-        st.session_state.messages.append(reponse_message)
-
-        reponse_message = {}
+        st.session_state.messages.append({'role': 'assistant', 'content': message})
