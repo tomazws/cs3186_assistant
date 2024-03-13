@@ -75,7 +75,8 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
                 message_block = message_block[10:]
 
             st.text(f'Message begins with digraph: {message_block[:7] == "digraph"}')
-            st.text(f'Message ends with {'}'}\n: {message_block[-3] == "}\n"}')
+            st.text('Message ends with \}: ')
+            st.text(message_block[-3] == "}\n")
             if message_block[:7] == 'digraph' and message_block[-3] == '}\n':
                 st.text('graphviz')
                 st.graphviz_chart(message_block)
