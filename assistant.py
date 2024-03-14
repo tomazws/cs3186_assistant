@@ -57,7 +57,7 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Wait for the run to complete
     with st.spinner('Thinking ...'):
         # Check the status of the run
-        while run.status == 'queued' or run.status == 'in_progress':
+        while run.status != 'completed':
             time.sleep(0.5)
             run = client.beta.threads.runs.retrieve(
                 thread_id = st.session_state.thread.id,
