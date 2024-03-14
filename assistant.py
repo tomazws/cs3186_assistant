@@ -4,10 +4,13 @@ import graphviz
 import time
 import json
 
+# Process the messsage and display it in the chat message container
 def displayMessage(role, content):
     with st.chat_message(role):
+        # Split the message by code blocks
         messages = content.split('```')
         for message in messages:
+            # If the message is a graphviz diagram, display it as a diagram
             if message.find('digraph DFA {') > -1 and message[-2] == '}':
                 message = message[message.find('digraph DFA {'):]
                 st.graphviz_chart(message)
