@@ -21,6 +21,10 @@ def displayMessage(role, content):
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
+with st.sidebar:
+    st.write('asdf')
+    if st.button('Convert NFA to DFA'):
+        st.write('You clicked the button!')
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
