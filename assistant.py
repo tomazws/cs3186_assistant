@@ -18,13 +18,20 @@ def displayMessage(role, content):
                 st.write(message)
     st.write('')
 
+# Display message and also append message to chat history
+def displayAppendMessage(role, content):
+    displayMessage(role, content)
+
+    # Add message to chat history
+    st.session_state.messages.append({'role': 'assistant', 'content': message})
+
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
 with st.sidebar:
     st.write('asdf')
     if st.button('Convert NFA to DFA'):
-        st.write('You clicked the button!')
+        displayAppendMessage('user', 'I want to convert NFA to DFA.')
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
@@ -41,12 +48,8 @@ for message in st.session_state.messages:
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
-    # Display user message in chat message container
-    with st.chat_message('user'):
-        st.markdown(prompt)
-    
-    # Add user message to chat history
-    st.session_state.messages.append({'role': 'user', 'content': prompt})
+    # Display user message in chat message container and add to chat history
+    displayAppendMessage('user', prompt)
 
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
@@ -77,8 +80,5 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
         )
         message = response.data[0].content[0].text.value
 
-        # Display assistant message in chat message container
-        displayMessage('assistant', message)
-            
-        # Add assistant message to chat history
-        st.session_state.messages.append({'role': 'assistant', 'content': message})
+        # Display assistant message in chat message container and add to chat history
+        displayAppendMessage('assistant', message)
