@@ -21,13 +21,15 @@ def displayAppendMessage(role, content, append=True):
     if append:
         st.session_state.messages.append({'role': role, 'content': content})
 
+def buttonClicked(content):
+    displayAppendMessage('user', content)
+
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
 with st.sidebar:
     st.write('asdf')
-    if st.button('Convert NFA to DFA'):
-        displayAppendMessage('user', 'I want to convert NFA to DFA.')
+    st.button('Convert NFA to DFA', on_click=buttonClicked, args=['I want to convert NFA to DFA.'])
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
