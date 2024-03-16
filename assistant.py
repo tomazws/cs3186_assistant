@@ -4,8 +4,8 @@ import graphviz
 import time
 import json
 
-# Process the messsage and display it in the chat message container
-def displayMessage(role, content):
+# Process the messsage and display it in the chat message container and also append message to chat history
+def displayAppendMessage(role, content, append=True):
     with st.chat_message(role):
         # Split the message by code blocks
         messages = content.split('```')
@@ -18,12 +18,8 @@ def displayMessage(role, content):
                 st.write(message)
     st.write('')
 
-# Display message and also append message to chat history
-def displayAppendMessage(role, content):
-    displayMessage(role, content)
-
-    # Add message to chat history
-    st.session_state.messages.append({'role': role, 'content': content})
+    if append:
+        st.session_state.messages.append({'role': role, 'content': content})
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
@@ -44,7 +40,7 @@ if 'thread' not in st.session_state:
 
 # Initialize chat messages
 for message in st.session_state.messages:
-    displayMessage(message['role'], message['content'])
+    displayAppendMessage(message['role'], message['content'], False)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
