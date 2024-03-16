@@ -23,7 +23,7 @@ def displayAppendMessage(role, content):
     displayMessage(role, content)
 
     # Add message to chat history
-    st.session_state.messages.append({'role': 'assistant', 'content': message})
+    st.session_state.messages.append({'role': role, 'content': content})
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
