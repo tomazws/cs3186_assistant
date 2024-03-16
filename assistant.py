@@ -16,7 +16,7 @@ def displayAppendMessage(role, content, append=True):
                 st.graphviz_chart(message)
             else:
                 st.write(message)
-    st.write('')
+        st.write('')
 
     if append:
         st.session_state.messages.append({'role': role, 'content': content})
