@@ -23,7 +23,8 @@ def displayAppendMessage(role, content, append=True):
 
 def buttonClicked(content):
     #displayAppendMessage('user', 'WTF??')
-    st.write('Button clicked')
+    with st.chat_message('user'):
+        st.write('Button clicked')
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
