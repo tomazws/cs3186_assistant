@@ -60,14 +60,17 @@ def getCompletion(prompt):
         displayAppendMessage('assistant', message)
 
 def buttonClick(content):
-    getCompletion(content)
+    #getCompletion(content)
+    st.write('Button clicked')
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
 
-with st.sidebar.button('Convert NFA to DFA'):
-    buttonClick('Convert NFA to DFA')
+with st.sidebar:
+    st.write('Buttons')
+    
+st.sidebar.button('Convert NFA to DFA', on_change=buttonClick, args=['Convert NFA to DFA'])
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
