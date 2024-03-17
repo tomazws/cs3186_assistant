@@ -83,8 +83,11 @@ if 'thread' not in st.session_state:
 for message in st.session_state.messages:
     displayMessage(message['role'], message['content'])
 
+prompt = st.chat_input('Ask me anything about CS 3186')
+
 # Chat input
-if prompt := st.chat_input('Ask me anything about CS 3186'):
+#if prompt := st.chat_input('Ask me anything about CS 3186'):
+if prompt:
     # Display user message in chat message container and add to chat history
     displayMessage('user', prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt})
