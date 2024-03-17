@@ -30,8 +30,7 @@ def buttonClicked(content):
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
 
-if st.sidebar.button('Convert NFA to DFA'):
-    st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
+st.text_input('Convert NFA to DFA', on_change=button, args=['Convert NFA to DFA'])
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
@@ -49,11 +48,7 @@ for message in st.session_state.messages:
 # Chat input
 prompt = st.chat_input('Ask me anything about CS 3186')
 
-if prompt:
-#if prompt := st.chat_input('Ask me anything about CS 3186'):
-    # Display user message in chat message container and add to chat history
-    displayAppendMessage('user', prompt)
-
+def getCompletion(prompt):
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
         thread_id = st.session_state.thread.id,
@@ -85,3 +80,8 @@ if prompt:
 
         # Display assistant message in chat message container and add to chat history
         displayAppendMessage('assistant', message)
+
+if prompt:
+    # Display user message in chat message container and add to chat history
+    displayAppendMessage('user', prompt)
+    getCompletion(prompt)
