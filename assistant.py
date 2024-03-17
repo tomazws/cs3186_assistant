@@ -26,28 +26,6 @@ def buttonClicked(content):
     with st.chat_message('user'):
         st.write('Button clicked')
 
-# Create title and subheader for the Streamlit page
-st.title('CS 3186 Student Assistant Chatbot')
-st.subheader('Ask me anything about CS 3186')
-
-st.text_input('Convert NFA to DFA', on_change=button, args=['Convert NFA to DFA'])
-
-# Initialize OpenAI Assistant API
-client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
-assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT2'])
-
-# Initialize session state variables
-if 'thread' not in st.session_state:
-    st.session_state.thread = client.beta.threads.create()
-    st.session_state.messages = []
-
-# Initialize chat messages
-for message in st.session_state.messages:
-    displayAppendMessage(message['role'], message['content'], False)
-
-# Chat input
-prompt = st.chat_input('Ask me anything about CS 3186')
-
 def getCompletion(prompt):
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
@@ -80,6 +58,31 @@ def getCompletion(prompt):
 
         # Display assistant message in chat message container and add to chat history
         displayAppendMessage('assistant', message)
+
+def button(content):
+    getCompletion(content)
+
+# Create title and subheader for the Streamlit page
+st.title('CS 3186 Student Assistant Chatbot')
+st.subheader('Ask me anything about CS 3186')
+
+st.text_input('Convert NFA to DFA', on_change=button, args=['Convert NFA to DFA'])
+
+# Initialize OpenAI Assistant API
+client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
+assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT2'])
+
+# Initialize session state variables
+if 'thread' not in st.session_state:
+    st.session_state.thread = client.beta.threads.create()
+    st.session_state.messages = []
+
+# Initialize chat messages
+for message in st.session_state.messages:
+    displayAppendMessage(message['role'], message['content'], False)
+
+# Chat input
+prompt = st.chat_input('Ask me anything about CS 3186')
 
 if prompt:
     # Display user message in chat message container and add to chat history
