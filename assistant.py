@@ -60,8 +60,7 @@ def getCompletion(prompt):
         displayAppendMessage('assistant', message)
 
 def buttonClick(content):
-    #getCompletion(content)
-    st.write('Button clicked')
+    getCompletion(content)
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
