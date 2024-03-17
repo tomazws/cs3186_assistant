@@ -33,8 +33,7 @@ with st.sidebar:
     st.write('asdf')
 
 if st.sidebar.button('Convert NFA to DFA'):
-    with st.chat_message('user'):
-        st.write('Button clicked')
+    displayAppendMessage('user', 'Convert NFA to DFA')
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
