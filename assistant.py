@@ -29,11 +29,8 @@ def buttonClicked(content):
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
-with st.sidebar:
-    st.write('asdf')
 
 if st.sidebar.button('Convert NFA to DFA'):
-    #displayAppendMessage('user', 'Convert NFA to DFA')
     st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
 
 # Initialize OpenAI Assistant API
