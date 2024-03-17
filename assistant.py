@@ -57,8 +57,9 @@ def getCompletion(prompt):
         displayMessage('assistant', message)
         st.session_state.messages.append({'role': 'assistant', 'content': message})
 
-def buttonClick(content):
-    getCompletion(content)
+def buttonClick(prompt):
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
+    getCompletion(prompt)
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
