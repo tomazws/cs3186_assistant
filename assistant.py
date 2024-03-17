@@ -34,8 +34,6 @@ with st.sidebar:
 
 if st.sidebar.button('Convert NFA to DFA'):
     #displayAppendMessage('user', 'Convert NFA to DFA')
-    with st.chat_message('user'):
-        st.write('Convert NFA to DFA')
     st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
 
 # Initialize OpenAI Assistant API
