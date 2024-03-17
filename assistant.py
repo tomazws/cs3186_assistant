@@ -47,7 +47,10 @@ for message in st.session_state.messages:
     displayAppendMessage(message['role'], message['content'], False)
 
 # Chat input
-if prompt := st.chat_input('Ask me anything about CS 3186'):
+prompt = st.chat_input('Ask me anything about CS 3186')
+
+if prompt:
+#if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
     displayAppendMessage('user', prompt)
 
