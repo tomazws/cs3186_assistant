@@ -45,6 +45,8 @@ for message in st.session_state.messages:
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
+    st.button('Convert NFA to DFA', on_click=buttonClicked, args=['I want to convert NFA to DFA.'])
+
     # Display user message in chat message container and add to chat history
     displayAppendMessage('user', prompt)
 
@@ -79,5 +81,3 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
 
         # Display assistant message in chat message container and add to chat history
         displayAppendMessage('assistant', message)
-
-st.button('Convert NFA to DFA', on_click=buttonClicked, args=['I want to convert NFA to DFA.'])
