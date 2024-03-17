@@ -23,12 +23,15 @@ def displayAppendMessage(role, content, append=True):
 
 def buttonClicked(content):
     #displayAppendMessage('user', 'WTF??')
-    with st.chat_message('user'):
-        st.write('Button clicked')
+    #with st.chat_message('user'):
+    st.write('Button clicked')
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
+with st.sidebar:
+    st.write('asdf')
+    st.button('Convert NFA to DFA', on_click=buttonClicked, args=['I want to convert NFA to DFA.'])
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
@@ -45,8 +48,6 @@ for message in st.session_state.messages:
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
-    st.button('Convert NFA to DFA', on_click=buttonClicked, args=['I want to convert NFA to DFA.'])
-
     # Display user message in chat message container and add to chat history
     displayAppendMessage('user', prompt)
 
