@@ -31,9 +31,10 @@ st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
 with st.sidebar:
     st.write('asdf')
-    if st.button('Convert NFA to DFA'):
-        with st.chat_message('user'):
-            st.write('Button clicked')
+
+if st.sidebar.button('Convert NFA to DFA'):
+    with st.chat_message('user'):
+        st.write('Button clicked')
 
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
