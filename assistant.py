@@ -5,7 +5,7 @@ import time
 import json
 
 # Process the messsage and display it in the chat message container and also append message to chat history
-def displayAppendMessage(role, content, append=True):
+def displayMessage(role, content):
     with st.chat_message(role):
         # Split the message by code blocks
         messages = content.split('```')
@@ -17,9 +17,6 @@ def displayAppendMessage(role, content, append=True):
             else:
                 st.write(message)
         st.write('')
-
-    if append:
-        st.session_state.messages.append({'role': role, 'content': content})
 
 def buttonClicked(content):
     #displayAppendMessage('user', 'WTF??')
@@ -57,7 +54,8 @@ def getCompletion(prompt):
         message = response.data[0].content[0].text.value
 
         # Display assistant message in chat message container and add to chat history
-        displayAppendMessage('assistant', message)
+        displayMessage('assistant', message)
+        st.session_state.messages.append({'role': 'assistant', 'content': message})
 
 def buttonClick(content):
     getCompletion(content)
@@ -82,12 +80,11 @@ if 'thread' not in st.session_state:
 
 # Initialize chat messages
 for message in st.session_state.messages:
-    displayAppendMessage(message['role'], message['content'], False)
+    displayMessage(message['role'], message['content'])
 
 # Chat input
-prompt = st.chat_input('Ask me anything about CS 3186')
-
-if prompt:
+if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
-    displayAppendMessage('user', prompt)
+    displayMessage('user', prompt)
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
     getCompletion(prompt)
