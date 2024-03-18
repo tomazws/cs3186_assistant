@@ -79,8 +79,8 @@ with st.sidebar:
     
 if st.sidebar.button('Convert NFA to DFA'):
     displayMessage('user', 'Convert NFA to DFA')
-    st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
-    getCompletion('Convert NFA to DFA')
+    #st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
+    #getCompletion('Convert NFA to DFA')
 
 # Display chat messages
 for message in st.session_state.messages:
