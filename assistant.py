@@ -67,10 +67,6 @@ def getCompletion(prompt):
     #     displayMessage('assistant', message)
     #     st.session_state.messages.append({'role': 'assistant', 'content': message})
 
-def convertNFAtoDFA():
-    st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
-    getCompletion('Convert NFA to DFA')
-
 ################################################################################
 ##                                  LAYOUTS                                   ##
 ################################################################################
@@ -81,7 +77,9 @@ st.subheader('Ask me anything about CS 3186')
 with st.sidebar:
     st.write('Buttons')
     
-st.sidebar.button('Convert NFA to DFA', on_click='convertNFAtoDFA')
+if st.sidebar.button('Convert NFA to DFA'):
+    st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
+    getCompletion('Convert NFA to DFA')
 
 # Display chat messages
 for message in st.session_state.messages:
