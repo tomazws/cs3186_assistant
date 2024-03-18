@@ -48,14 +48,14 @@ def getCompletion(prompt):
     )
 
     # # Wait for the run to complete
-    with st.spinner('Thinking ...'):
+    #with st.spinner('Thinking ...'):
         # Check the status of the run
-        while run.status != 'completed':
-            time.sleep(0.5)
-            run = client.beta.threads.runs.retrieve(
-                thread_id = st.session_state.thread.id,
-                run_id = run.id
-            )
+    while run.status != 'completed':
+        time.sleep(0.5)
+        run = client.beta.threads.runs.retrieve(
+            thread_id = st.session_state.thread.id,
+            run_id = run.id
+        )
 
     #     # Retrieve message added by the assistant
     #     response = client.beta.threads.messages.list(
