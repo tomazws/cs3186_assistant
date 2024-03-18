@@ -84,7 +84,8 @@ if st.sidebar.button('Convert NFA to DFA'):
 
 # Display chat messages
 for message in st.session_state.messages:
-    displayMessage(message['role'], message['content'])
+    #displayMessage(message['role'], message['content'])
+    pass
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
