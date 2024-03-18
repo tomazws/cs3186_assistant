@@ -23,6 +23,8 @@ if 'thread' not in st.session_state:
             'session_id': st.session_state.session_id,
         }
     )
+
+if 'messages' not in st.session_state:
     st.session_state.messages = []
 
 ################################################################################
