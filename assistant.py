@@ -3,6 +3,7 @@ from openai import OpenAI
 import graphviz
 import time
 import json
+import re
 
 ################################################################################
 ##                           INITIALIZE APPLICATION                           ##
@@ -26,7 +27,7 @@ def displayMessage(role, content):
         messages = content.split('```')
         for message in messages:
             # If the message is a graphviz diagram, display it as a diagram
-            if message.find('digraph DFA {') > -1 and message[-2] == '}':
+            if re.search('^digraph .FA', message) and message[-2] == '}':
                 message = message[message.find('digraph DFA {'):]
                 st.graphviz_chart(message)
             else:
@@ -77,6 +78,9 @@ st.subheader('Ask me anything about CS 3186')
 # Display chat messages
 for message in st.session_state.messages:
     displayMessage(message['role'], message['content'])
+
+txt = 'digraph NFA { '
+
 
 with st.sidebar:
     st.write('Buttons')
