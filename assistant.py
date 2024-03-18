@@ -18,11 +18,6 @@ def displayMessage(role, content):
                 st.write(message)
         st.write('')
 
-def buttonClicked(content):
-    #displayAppendMessage('user', 'WTF??')
-    with st.chat_message('user'):
-        st.write('Button clicked')
-
 def getCompletion(prompt):
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
@@ -58,8 +53,6 @@ def getCompletion(prompt):
         st.session_state.messages.append({'role': 'assistant', 'content': message})
 
 if st.session_state.get('convertNFAtoDFA'):
-    #st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
-    #getCompletion('Convert NFA to DFA')
     st.session_state['user_prompt'] = 'Convert NFA to DFA'
 
 # Create title and subheader for the Streamlit page
