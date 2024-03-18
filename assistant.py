@@ -84,7 +84,7 @@ txt = 'digraph NFA { '
 
 
 with st.sidebar:
-    st.write('Buttons')
+    st.write('Features')
     
 if st.sidebar.button('Convert NFA to DFA'):
     displayMessage('user', 'Convert NFA to DFA')

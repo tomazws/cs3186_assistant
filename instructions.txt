@@ -64,5 +64,8 @@ If the student is asking to convert a NFA to DFA. Please ask student to describe
 
 
 //
-initial state = q0, final state = q3, q0-q0 labeled 0, 1, q0 to q1 labeled 0, q1 to q3 labeled 0, q0 to q2 labeled 1, q2 to q2 labeled 0, q2 to q3 labeled 0, 1, q3 to q3 labeled 0, 1
-
+initial state = q0
+final state = q2
+q0->q0 labeled a, b
+q0 to q1 labeled a
+q1 to q2 labeled b
