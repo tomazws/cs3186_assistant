@@ -16,10 +16,6 @@ if 'thread' not in st.session_state:
     st.session_state.thread = client.beta.threads.create()
     st.session_state.messages = []
 
-# Initialize chat messages
-for message in st.session_state.messages:
-    displayMessage(message['role'], message['content'])
-
 ################################################################################
 ##                                 FUNCTIONS                                  ##
 ################################################################################
@@ -86,6 +82,10 @@ with st.sidebar:
     st.write('Buttons')
     
 st.sidebar.button('Convert NFA to DFA', key='convertNFAtoDFA')
+
+# Display chat messages
+for message in st.session_state.messages:
+    displayMessage(message['role'], message['content'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
