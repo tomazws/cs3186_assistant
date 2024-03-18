@@ -30,11 +30,10 @@ def displayMessage(role, content):
             match = re.search('digraph .FA {', message)
             if match and message[-2] == '}':
                 message = message[match.start():]
-                st.text(message)
                 st.graphviz_chart(message)
             else:
                 st.write(message)
-        st.write('')
+    st.write('')
 
 def getCompletion(prompt):
     # Send user message to OpenAI Assistant API
