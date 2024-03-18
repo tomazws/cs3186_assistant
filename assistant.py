@@ -1,6 +1,7 @@
 import streamlit as st
 from openai import OpenAI
 import graphviz
+import uuid
 import time
 import json
 import re
@@ -13,8 +14,15 @@ client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT2'])
 
 # Initialize session state variables
+if 'session_id' not in st.session_state:
+    st.session_state.session_id = str(uuid.uuid4())
+
 if 'thread' not in st.session_state:
-    st.session_state.thread = client.beta.threads.create()
+    st.session_state.thread = client.beta.threads.create(
+        metadata={
+            'session_id': st.session_state.session_id,
+        }
+    )
     st.session_state.messages = []
 
 ################################################################################
