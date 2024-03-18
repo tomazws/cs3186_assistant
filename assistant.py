@@ -84,7 +84,7 @@ if 'thread' not in st.session_state:
 for message in st.session_state.messages:
     displayMessage(message['role'], message['content'])
 
-prompt = st.chat_input('Ask me anything about CS 3186', key='user_prompt', writes_allowed=True)
+prompt = st.chat_input('Ask me anything about CS 3186', key='user_prompt')
 
 # Chat input
 #if prompt := st.chat_input('Ask me anything about CS 3186'):
