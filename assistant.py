@@ -41,21 +41,21 @@ def getCompletion(prompt):
         content = prompt
     )
 
-    # Create a run to process the user message
-    run = client.beta.threads.runs.create(
-        thread_id = st.session_state.thread.id,
-        assistant_id = assistant.id
-    )
+    # # Create a run to process the user message
+    # run = client.beta.threads.runs.create(
+    #     thread_id = st.session_state.thread.id,
+    #     assistant_id = assistant.id
+    # )
 
-    # Wait for the run to complete
-    with st.spinner('Thinking ...'):
-        # Check the status of the run
-        while run.status != 'completed':
-            time.sleep(0.5)
-            run = client.beta.threads.runs.retrieve(
-                thread_id = st.session_state.thread.id,
-                run_id = run.id
-            )
+    # # Wait for the run to complete
+    # with st.spinner('Thinking ...'):
+    #     # Check the status of the run
+    #     while run.status != 'completed':
+    #         time.sleep(0.5)
+    #         run = client.beta.threads.runs.retrieve(
+    #             thread_id = st.session_state.thread.id,
+    #             run_id = run.id
+    #         )
 
     #     # Retrieve message added by the assistant
     #     response = client.beta.threads.messages.list(
@@ -69,7 +69,7 @@ def getCompletion(prompt):
 
 if st.session_state.get('convertNFAtoDFA'):
     st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
-    #getCompletion('Convert NFA to DFA')
+    getCompletion('Convert NFA to DFA')
 
 ################################################################################
 ##                                  LAYOUTS                                   ##
