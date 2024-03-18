@@ -41,11 +41,11 @@ def getCompletion(prompt):
         content = prompt
     )
 
-    # # Create a run to process the user message
-    # run = client.beta.threads.runs.create(
-    #     thread_id = st.session_state.thread.id,
-    #     assistant_id = assistant.id
-    # )
+    # Create a run to process the user message
+    run = client.beta.threads.runs.create(
+        thread_id = st.session_state.thread.id,
+        assistant_id = assistant.id
+    )
 
     # # Wait for the run to complete
     # with st.spinner('Thinking ...'):
