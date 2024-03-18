@@ -74,6 +74,10 @@ def getCompletion(prompt):
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
 
+# Display chat messages
+for message in st.session_state.messages:
+    displayMessage(message['role'], message['content'])
+
 with st.sidebar:
     st.write('Buttons')
     
@@ -81,10 +85,6 @@ if st.sidebar.button('Convert NFA to DFA'):
     #displayMessage('user', 'Convert NFA to DFA')
     st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
     getCompletion('Convert NFA to DFA')
-
-# Display chat messages
-for message in st.session_state.messages:
-    displayMessage(message['role'], message['content'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
