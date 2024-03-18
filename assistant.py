@@ -48,14 +48,14 @@ def getCompletion(prompt):
     )
 
     # # Wait for the run to complete
-    #with st.spinner('Thinking ...'):
+    with st.spinner('Thinking ...'):
         # Check the status of the run
-    while run.status != 'completed':
-        time.sleep(0.5)
-        run = client.beta.threads.runs.retrieve(
-            thread_id = st.session_state.thread.id,
-            run_id = run.id
-        )
+        while run.status != 'completed':
+            time.sleep(0.5)
+            run = client.beta.threads.runs.retrieve(
+                thread_id = st.session_state.thread.id,
+                run_id = run.id
+            )
 
     #     # Retrieve message added by the assistant
     #     response = client.beta.threads.messages.list(
@@ -67,7 +67,7 @@ def getCompletion(prompt):
     #     displayMessage('assistant', message)
     #     st.session_state.messages.append({'role': 'assistant', 'content': message})
 
-if st.session_state.get('convertNFAtoDFA'):
+def convertNFAtoDFA():
     st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
     getCompletion('Convert NFA to DFA')
 
@@ -81,7 +81,7 @@ st.subheader('Ask me anything about CS 3186')
 with st.sidebar:
     st.write('Buttons')
     
-st.sidebar.button('Convert NFA to DFA', key='convertNFAtoDFA')
+st.sidebar.button('Convert NFA to DFA', on_click='convertNFAtoDFA')
 
 # Display chat messages
 for message in st.session_state.messages:
