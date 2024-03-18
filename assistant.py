@@ -69,7 +69,7 @@ def getCompletion(prompt):
 
 if st.session_state.get('convertNFAtoDFA'):
     st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
-    getCompletion('Convert NFA to DFA')
+    #getCompletion('Convert NFA to DFA')
 
 ################################################################################
 ##                                  LAYOUTS                                   ##
