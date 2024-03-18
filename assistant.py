@@ -53,7 +53,8 @@ def getCompletion(prompt):
         st.session_state.messages.append({'role': 'assistant', 'content': message})
 
 if st.session_state.get('convertNFAtoDFA'):
-    st.session_state['user_prompt'] = 'Convert NFA to DFA'
+    st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
+    getCompletion('Convert NFA to DFA')
 
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
@@ -77,11 +78,8 @@ if 'thread' not in st.session_state:
 for message in st.session_state.messages:
     displayMessage(message['role'], message['content'])
 
-prompt = st.chat_input('Ask me anything about CS 3186', key='user_prompt')
-
 # Chat input
-#if prompt := st.chat_input('Ask me anything about CS 3186'):
-if prompt:
+if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
     displayMessage('user', prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt})
