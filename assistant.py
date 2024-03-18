@@ -57,15 +57,15 @@ def getCompletion(prompt):
                 run_id = run.id
             )
 
-    #     # Retrieve message added by the assistant
-    #     response = client.beta.threads.messages.list(
-    #         thread_id = st.session_state.thread.id
-    #     )
-    #     message = response.data[0].content[0].text.value
+        # Retrieve message added by the assistant
+        response = client.beta.threads.messages.list(
+            thread_id = st.session_state.thread.id
+        )
+        message = response.data[0].content[0].text.value
 
-    #     # Display assistant message in chat message container and add to chat history
-    #     displayMessage('assistant', message)
-    #     st.session_state.messages.append({'role': 'assistant', 'content': message})
+        # Display assistant message in chat message container and add to chat history
+        displayMessage('assistant', message)
+        st.session_state.messages.append({'role': 'assistant', 'content': message})
 
 ################################################################################
 ##                                  LAYOUTS                                   ##
