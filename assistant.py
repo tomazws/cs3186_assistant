@@ -30,7 +30,7 @@ def displayMessage(role, content):
             st.text(message)
             match = re.search('digraph .FA {', message)
             if match and message[-2] == '}':
-                message = message[match.end():]
+                message = message[match.start():]
                 st.text(message)
                 #st.graphviz_chart(message)
             else:
