@@ -4,6 +4,25 @@ import graphviz
 import time
 import json
 
+################################################################################
+##                           INITIALIZE APPLICATION                           ##
+################################################################################
+# Initialize OpenAI Assistant API
+client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
+assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT2'])
+
+# Initialize session state variables
+if 'thread' not in st.session_state:
+    st.session_state.thread = client.beta.threads.create()
+    st.session_state.messages = []
+
+# Initialize chat messages
+for message in st.session_state.messages:
+    displayMessage(message['role'], message['content'])
+
+################################################################################
+##                                 FUNCTIONS                                  ##
+################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
     with st.chat_message(role):
@@ -56,6 +75,9 @@ if st.session_state.get('convertNFAtoDFA'):
     st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
     getCompletion('Convert NFA to DFA')
 
+################################################################################
+##                                  LAYOUTS                                   ##
+################################################################################
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
 st.subheader('Ask me anything about CS 3186')
@@ -64,19 +86,6 @@ with st.sidebar:
     st.write('Buttons')
     
 st.sidebar.button('Convert NFA to DFA', key='convertNFAtoDFA')
-
-# Initialize OpenAI Assistant API
-client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
-assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT2'])
-
-# Initialize session state variables
-if 'thread' not in st.session_state:
-    st.session_state.thread = client.beta.threads.create()
-    st.session_state.messages = []
-
-# Initialize chat messages
-for message in st.session_state.messages:
-    displayMessage(message['role'], message['content'])
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
