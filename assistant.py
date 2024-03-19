@@ -38,7 +38,7 @@ def displayMessage(role, content):
         messages = content.split('```')
         for message in messages:
             # If the message is a graphviz diagram, display it as a diagram
-            match = re.search('digraph .FA {', message)
+            match = re.search('digraph .* {', message)
             if match and message[-2] == '}':
                 message = message[match.start():]
                 st.graphviz_chart(message)
