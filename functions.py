@@ -24,8 +24,8 @@ def nfa_to_dfa(dot_script):
 
     # Get final states
     finals = set()
-    nfa_source_lines = nfa_source.splitlines()
-    for line in nfa_source_lines:
+    dot_script_lines = dot_script.splitlines()
+    for line in dot_script_lines:
         if 'doublecircle' in line:
             nodes = line.split(';')[1].strip().split(' ')
             for node in nodes:
@@ -67,7 +67,7 @@ def nfa_to_dfa(dot_script):
         for label, destination in delta.items():
             edges += f'{removeAutomathonFormat(source)} -> {removeAutomathonFormat(destination)} [label = "{label}"];\n'
 
-    nfa_source = f'''
+    dot_script = f'''
     digraph NFA {{
         rankdir=LR;
         node [shape = circle]; {' '.join(states)};
@@ -78,4 +78,4 @@ def nfa_to_dfa(dot_script):
     }}
     '''
     
-    return nfa_source
+    return dot_script
