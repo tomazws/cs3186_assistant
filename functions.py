@@ -19,7 +19,7 @@ def nfa_to_dfa(dot_script):
     # Get all states
     states = set()
     for node in nfa.get_nodes():
-        if 'q' in node.get_name():
+        if 'node []' not in node.get_name() and 'start [' not in node.get_name() and '"\\n"' not in node.get_name():
             states.add(node.get_name())
 
     # Get final states
