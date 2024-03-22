@@ -120,16 +120,20 @@ st.subheader('Ask me anything about CS 3186')
 for message in st.session_state.messages:
     displayMessage(message['role'], message['content'])
 
-txt = 'digraph NFA { '
-
-
 with st.sidebar:
     st.write('Features')
     
 if st.sidebar.button('Convert NFA to DFA'):
-    displayMessage('user', 'Convert NFA to DFA')
-    st.session_state.messages.append({'role': 'user', 'content': 'Convert NFA to DFA'})
-    getCompletion('Convert NFA to DFA')
+    message = 'Convert NFA to DFA'
+    displayMessage('user', message)
+    st.session_state.messages.append({'role': 'user', 'content': message})
+    getCompletion(message)
+    
+if st.sidebar.button('Generate DFA'):
+    message = 'Generate DFA from Regular Expression'
+    displayMessage('user', message)
+    st.session_state.messages.append({'role': 'user', 'content': message})
+    getCompletion(message)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
