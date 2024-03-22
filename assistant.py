@@ -1,11 +1,11 @@
-import streamlit as st
 from openai import OpenAI
+import streamlit as st
 import graphviz
 import uuid
 import time
 import json
 import re
-import functions
+from functions import nfa_to_dfa
 
 ################################################################################
 ##                           INITIALIZE APPLICATION                           ##
