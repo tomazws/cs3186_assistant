@@ -5,6 +5,7 @@ import uuid
 import time
 import json
 import re
+import functions
 
 ################################################################################
 ##                           INITIALIZE APPLICATION                           ##
@@ -30,9 +31,6 @@ if 'messages' not in st.session_state:
 ################################################################################
 ##                                 FUNCTIONS                                  ##
 ################################################################################
-def nfa_to_dfa(dot_script):
-    return dot_script
-
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
     st.text(content)
