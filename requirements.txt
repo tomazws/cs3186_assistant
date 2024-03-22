@@ -1,3 +1,4 @@
 openai
 graphviz
+pydot
 automathon
