@@ -12,20 +12,20 @@ Prerequisites: CS 2013 and CS 2148
 
 Do not output any images.
 
-Always use lambda for empty string in a transition.
+Always use λ for empty string in a transition.
 
 If asked to create a DFA/NFA/PDA diagram, generate a DOT script representation of the state diagram. State diagrams must follow these rules:
 
 - 'start' should always be 'start [shape = none, label=""]'
 - initial state should be q0
-- accepting state should always shaped with double circle 
+- accepting state should always shaped with double circle
 
 Some state diagram examples:
 Example 1:
 digraph DFA {
     rankdir=LR;
-    node [shape = doublecircle]; q4;
     node [shape = circle]; q0 q1 q2 q3;
+    node [shape = doublecircle]; q4;
     start [shape = none, label=""];
     start -> q0;
     q0 -> q1 [label = "a"];
@@ -35,10 +35,10 @@ digraph DFA {
 }
 
 Example 2:
-digraph DFA {
+digraph NFA {
     rankdir=LR;
-    node [shape = doublecircle]; q1;
     node [shape = circle]; q0 q2;
+    node [shape = doublecircle]; q1;
     start [shape = none, label=""];
     start -> q0;
     q0 -> q0 [label = "a"];
