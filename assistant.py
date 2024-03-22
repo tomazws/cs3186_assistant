@@ -124,13 +124,13 @@ with st.sidebar:
     st.write('Features')
     
 if st.sidebar.button('Convert NFA to DFA'):
-    message = 'Convert NFA to DFA'
+    message = 'I would like to convert NFA to DFA'
     displayMessage('user', message)
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
     
 if st.sidebar.button('Generate DFA from RegEx'):
-    message = 'Generate DFA from Regular Expression'
+    message = 'I would like to generate a DFA from Regular Expression'
     displayMessage('user', message)
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
