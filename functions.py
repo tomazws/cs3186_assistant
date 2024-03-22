@@ -71,7 +71,7 @@ def nfa_to_dfa(dot_script):
             edges += f'{removeAutomathonFormat(source)} -> {removeAutomathonFormat(destination)} [label = "{label}"];\n'
 
     dot_script = f'''
-    digraph NFA {{
+    digraph DFA {{
         rankdir=LR;
         node [shape = circle]; {' '.join(states)};
         node [shape = doublecircle]; {' '.join(final_states)};
