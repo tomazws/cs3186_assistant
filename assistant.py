@@ -108,3 +108,4 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     displayMessage('user', prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt})
     getCompletion(prompt)
+    
