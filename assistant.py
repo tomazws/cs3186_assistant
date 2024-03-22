@@ -131,8 +131,8 @@ if st.sidebar.button('Convert NFA to DFA'):
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
     
-if st.sidebar.button('Generate DFA from RegEx'):
-    message = 'I would like to generate a DFA from Regular Expression'
+if st.sidebar.button('Generate a DFA diagram'):
+    message = 'I would like to generate a DFA from regular expression or langage'
     displayMessage('user', message)
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
