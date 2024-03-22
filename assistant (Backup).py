@@ -30,9 +30,6 @@ if 'messages' not in st.session_state:
 ################################################################################
 ##                                 FUNCTIONS                                  ##
 ################################################################################
-def nfa_to_dfa(dot_script):
-    return dot_script
-
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
     st.text(content)
@@ -67,39 +64,11 @@ def getCompletion(prompt):
     with st.spinner('Thinking ...'):
         # Check the status of the run
         while run.status != 'completed':
-            # Check the status of the run
-            while run.status == 'queued' or run.status == 'in_progress':
-                time.sleep(0.5)
-                run = client.beta.threads.runs.retrieve(
-                    thread_id = st.session_state.thread.id,
-                    run_id = run.id
-                )
-        
-            if run.status == 'requires_action':
-                # Retrieve tool call
-                tool_call = run.required_action.submit_tool_outputs.tool_calls[0]
-
-                # Extract function name and arguments
-                function = tool_call.function.name
-                args = json.loads(tool_call.function.arguments)
-
-                # Call function
-                response = globals()[function](**args)
-
-                # Submit output from function call
-                run = client.beta.threads.runs.submit_tool_outputs(
-                    thread_id = st.session_state.thread.id,
-                    run_id = run.id,
-                    tool_outputs = [
-                        {
-                            'tool_call_id': tool_call.id,
-                            'output': response
-                        }
-                    ]
-                )
-            
-            if run.status == 'failed':
-                break
+            time.sleep(0.5)
+            run = client.beta.threads.runs.retrieve(
+                thread_id = st.session_state.thread.id,
+                run_id = run.id
+            )
 
         # Retrieve message added by the assistant
         response = client.beta.threads.messages.list(
