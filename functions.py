@@ -61,8 +61,8 @@ def nfa_to_dfa(dot_script):
     automathonDFA = automathonNFA.get_dfa()
     
     # Parse DFA objects to convert to dot script
-    states = {removeFormat(state) for state in automathonDFA.Q}
-    final_states = {removeFormat(final_state) for final_state in automathonDFA.F}
+    states = {removeAutomathonFormat(state) for state in automathonDFA.Q}
+    final_states = {removeAutomathonFormat(final_state) for final_state in automathonDFA.F}
     states = states - final_states
 
     edges = ''
