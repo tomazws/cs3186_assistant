@@ -12,7 +12,7 @@ from functions import nfa_to_dfa
 ################################################################################
 # Initialize OpenAI Assistant API
 client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
-assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT2'])
+assistant = client.beta.assistants.retrieve(st.secrets['OPENAI_ASSISTANT'])
 
 # Initialize session state variables
 if 'session_id' not in st.session_state:
