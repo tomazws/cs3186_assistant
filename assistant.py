@@ -137,6 +137,9 @@ if st.sidebar.button('Generate a DFA diagram'):
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
 
+# File uploader
+uploaded_image = st.sidebar.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
+
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
