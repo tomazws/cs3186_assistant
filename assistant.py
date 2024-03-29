@@ -47,13 +47,22 @@ def displayMessage(role, content):
                 st.write(message)
     st.write('')
 
-def getCompletion(prompt):
-    # Send user message to OpenAI Assistant API
-    client.beta.threads.messages.create(
-        thread_id = st.session_state.thread.id,
-        role = 'user',
-        content = prompt
-    )
+def getCompletion(prompt, file_id = None):
+    if file_id is None:
+        # Send user message to OpenAI Assistant API
+        client.beta.threads.messages.create(
+            thread_id = st.session_state.thread.id,
+            role = 'user',
+            content = prompt
+        )
+    else:
+        # Send user message to OpenAI Assistant API
+        client.beta.threads.messages.create(
+            thread_id = st.session_state.thread.id,
+            role = 'user',
+            content = prompt,
+            file_ids = [file_id]
+        )
 
     # Create a run to process the user message
     run = client.beta.threads.runs.create(
@@ -140,16 +149,14 @@ if st.sidebar.button('Generate a DFA diagram'):
 # File uploader
 uploaded_image = st.sidebar.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
 
-if uploaded_image is not None:
-    with st.status("Uploading...", expanded=False) as status_box:
+# Chat input
+if prompt := st.chat_input('Ask me anything about CS 3186'):
+    if uploaded_image is not None:
         file = client.files.create(
             file = uploaded_image,
             purpose = 'assistants'
         )
-
-# Chat input
-if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
     displayMessage('user', prompt)
-    st.session_state.messages.append({'role': 'user', 'content': prompt})
-    getCompletion(prompt)
+    st.session_state.messages.append({'role': 'user', 'content': prompt, 'file_ids': [file.id]})
+    getCompletion(prompt, file.id)
