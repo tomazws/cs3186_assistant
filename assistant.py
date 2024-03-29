@@ -64,6 +64,8 @@ def getCompletion(prompt, file_id = None):
             file_ids = [file_id]
         )
 
+    st.write(client.beta.threads.messages)
+
     # Create a run to process the user message
     run = client.beta.threads.runs.create(
         thread_id = st.session_state.thread.id,
