@@ -48,8 +48,6 @@ def displayMessage(role, content):
     st.write('')
 
 def getCompletion(prompt, file_id = None):
-    st.write(file_id)
-
     if file_id is None:
         # Send user message to OpenAI Assistant API
         client.beta.threads.messages.create(
@@ -116,6 +114,7 @@ def getCompletion(prompt, file_id = None):
         response = client.beta.threads.messages.list(
             thread_id = st.session_state.thread.id
         )
+        st.write(response.data[)
         message = response.data[0].content[0].text.value
 
         # Display assistant message in chat message container and add to chat history
