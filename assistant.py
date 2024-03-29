@@ -5,6 +5,8 @@ import uuid
 import time
 import json
 import re
+import base64
+import io
 from functions import nfa_to_dfa
 
 ################################################################################
@@ -47,22 +49,13 @@ def displayMessage(role, content):
                 st.write(message)
     st.write('')
 
-def getCompletion(prompt, file_id = None):
-    if file_id is None:
-        # Send user message to OpenAI Assistant API
-        client.beta.threads.messages.create(
-            thread_id = st.session_state.thread.id,
-            role = 'user',
-            content = prompt
-        )
-    else:
-        # Send user message to OpenAI Assistant API
-        client.beta.threads.messages.create(
-            thread_id = st.session_state.thread.id,
-            role = 'user',
-            content = prompt,
-            file_ids = [file_id]
-        )
+def getCompletion(prompt):
+    # Send user message to OpenAI Assistant API
+    client.beta.threads.messages.create(
+        thread_id = st.session_state.thread.id,
+        role = 'user',
+        content = prompt
+    )
 
     # Create a run to process the user message
     run = client.beta.threads.runs.create(
@@ -114,7 +107,6 @@ def getCompletion(prompt, file_id = None):
         response = client.beta.threads.messages.list(
             thread_id = st.session_state.thread.id
         )
-        st.write(response.data)
         message = response.data[0].content[0].text.value
 
         # Display assistant message in chat message container and add to chat history
@@ -147,9 +139,6 @@ if st.sidebar.button('Generate a DFA diagram'):
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
 
-# File uploader
-uploaded_image = st.sidebar.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
-
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
     if uploaded_image is not None:
@@ -160,4 +149,4 @@ if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
     displayMessage('user', prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt, 'file_ids': [file.id]})
-    getCompletion(prompt, file.id)
+    getCompletion(prompt)
