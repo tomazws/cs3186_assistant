@@ -114,7 +114,7 @@ def getCompletion(prompt, file_id = None):
         response = client.beta.threads.messages.list(
             thread_id = st.session_state.thread.id
         )
-        st.write(response.data[)
+        st.write(response.data)
         message = response.data[0].content[0].text.value
 
         # Display assistant message in chat message container and add to chat history
