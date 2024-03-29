@@ -48,6 +48,8 @@ def displayMessage(role, content):
     st.write('')
 
 def getCompletion(prompt, file_id = None):
+    st.write(file_id)
+
     if file_id is None:
         # Send user message to OpenAI Assistant API
         client.beta.threads.messages.create(
@@ -63,8 +65,6 @@ def getCompletion(prompt, file_id = None):
             content = prompt,
             file_ids = [file_id]
         )
-
-    st.write(client.beta.threads.messages)
 
     # Create a run to process the user message
     run = client.beta.threads.runs.create(
