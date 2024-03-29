@@ -140,6 +140,13 @@ if st.sidebar.button('Generate a DFA diagram'):
 # File uploader
 uploaded_image = st.sidebar.file_uploader('Upload an image', type=['png', 'jpg', 'jpeg', 'gif'])
 
+if uploaded_image is not None:
+    with st.status("Uploading...", expanded=False) as status_box:
+        file = client.files.create(
+            file = uploaded_image,
+            purpose = 'assistants'
+        )
+
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
