@@ -118,7 +118,7 @@ def getCompletion(prompt):
 ################################################################################
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
-st.subheader('Using OpenAI Assistant API')
+st.subheader('Using OpenAI Assistant API (gpt-4-0613)')
 
 # Display chat messages
 for message in st.session_state.messages:
