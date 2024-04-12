@@ -30,15 +30,6 @@ if 'thread' not in st.session_state:
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 
-# Initialize file assistant
-# assistant = client.beta.assistants.create(
-#     name = 'Assignment #1',
-#     instructions = 'This is the homework assignment for the first week of class.',
-#     model = "gpt-3.5-turbo-1106",
-#     tools = [{'type': 'retrieval'}],
-#     file_ids = ['file-X8aHnPO1dOTwpUCrWDTFJ0Wi']
-# )
-
 ################################################################################
 ##                                 FUNCTIONS                                  ##
 ################################################################################
@@ -68,9 +59,7 @@ def getCompletion(prompt):
 
     # Create a run to process the user message
     run = client.beta.threads.runs.create(
-        thread_id = st.session_state.thread.id,
-        # assistant_id = assistant.id
-        assistant_id = 'asst_JxmlNBelsfqvBcvF4xd6KtTO'
+        thread_id = st.session_state.thread.id
     )
 
     # # Wait for the run to complete
