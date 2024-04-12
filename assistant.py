@@ -139,14 +139,14 @@ if st.sidebar.button('Generate a DFA diagram'):
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
     
-if st.sidebar.button('Question on the syllabus'):
+if st.sidebar.button('Question about this course'):
     message = 'I have a question about the class syllabus'
     displayMessage('user', message)
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
     
 if st.sidebar.button('Question on Assignment 1'):
-    message = 'I have a question on assignment 1'
+    message = 'I have a question on assignment #1'
     displayMessage('user', message)
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
