@@ -139,6 +139,9 @@ if st.sidebar.button('Generate a DFA diagram'):
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
 
+my_assistant = client.beta.assistants.retrieve("file-X8aHnPO1dOTwpUCrWDTFJ0Wi")
+st.write(my_assistant)
+
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
