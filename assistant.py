@@ -62,7 +62,6 @@ def getCompletion(prompt):
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
         thread_id = st.session_state.thread.id,
-        assistant_id = assistant.id,
         role = 'user',
         content = prompt
     )
