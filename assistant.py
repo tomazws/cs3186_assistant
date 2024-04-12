@@ -35,7 +35,7 @@ if 'messages' not in st.session_state:
 ################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
-    st.text(content)
+    # st.text(content)
     with st.chat_message(role):
         # Split the message by code blocks
         messages = content.split('```')
@@ -85,8 +85,8 @@ def getCompletion(prompt):
 
                 # Call function
                 response = globals()[function](**args)
-                st.text('Response from function:')
-                st.text(response)
+                # st.text('Response from function:')
+                # st.text(response)
 
                 # Submit output from function call
                 run = client.beta.threads.runs.submit_tool_outputs(
