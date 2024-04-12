@@ -141,11 +141,6 @@ if st.sidebar.button('Generate a DFA diagram'):
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
-    if uploaded_image is not None:
-        file = client.files.create(
-            file = uploaded_image,
-            purpose = 'assistants'
-        )
     # Display user message in chat message container and add to chat history
     displayMessage('user', prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt, 'file_ids': [file.id]})
