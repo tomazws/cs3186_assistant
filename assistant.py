@@ -54,7 +54,9 @@ def getCompletion(prompt):
     client.beta.threads.messages.create(
         thread_id = st.session_state.thread.id,
         role = 'user',
-        content = prompt
+        content = prompt,
+        tools = [{'type': 'retrieval'}],
+        file_ids = ['file-X8aHnPO1dOTwpUCrWDTFJ0Wi']
     )
 
     # Create a run to process the user message
@@ -138,10 +140,6 @@ if st.sidebar.button('Generate a DFA diagram'):
     displayMessage('user', message)
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
-
-my_assistant = client.beta.assistants.retrieve("file-X8aHnPO1dOTwpUCrWDTFJ0Wi")
-st.write('asdf')
-st.write(my_assistant)
 
 # Chat input
 if prompt := st.chat_input('Ask me anything about CS 3186'):
