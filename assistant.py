@@ -62,6 +62,7 @@ def getCompletion(prompt):
     # Send user message to OpenAI Assistant API
     client.beta.threads.messages.create(
         thread_id = st.session_state.thread.id,
+        thread_id = st.session_state.thread.id,
         role = 'user',
         content = prompt
     )
@@ -80,7 +81,6 @@ def getCompletion(prompt):
             while run.status == 'queued' or run.status == 'in_progress':
                 time.sleep(0.5)
                 run = client.beta.threads.runs.retrieve(
-                    thread_id = st.session_state.thread.id,
                     assistant_id = assistant.id,
                     run_id = run.id
                 )
