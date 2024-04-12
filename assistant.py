@@ -118,7 +118,7 @@ def getCompletion(prompt):
 ################################################################################
 # Create title and subheader for the Streamlit page
 st.title('CS 3186 Student Assistant Chatbot')
-st.subheader('Using OpenAI Assistant API (gpt-4-0613)')
+# st.subheader('Using OpenAI Assistant API (gpt-4-0613)')
 
 # Display chat messages
 for message in st.session_state.messages:
@@ -135,6 +135,18 @@ if st.sidebar.button('Convert NFA to DFA'):
     
 if st.sidebar.button('Generate a DFA diagram'):
     message = 'I would like to generate a DFA from regular expression or langage'
+    displayMessage('user', message)
+    st.session_state.messages.append({'role': 'user', 'content': message})
+    getCompletion(message)
+    
+if st.sidebar.button('Question on the syllabus'):
+    message = 'I have a question about the class syllabus'
+    displayMessage('user', message)
+    st.session_state.messages.append({'role': 'user', 'content': message})
+    getCompletion(message)
+    
+if st.sidebar.button('Question on Assignment 1'):
+    message = 'I have a question on assignment 1'
     displayMessage('user', message)
     st.session_state.messages.append({'role': 'user', 'content': message})
     getCompletion(message)
