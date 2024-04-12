@@ -101,7 +101,6 @@ def getCompletion(prompt):
                 # Submit output from function call
                 run = client.beta.threads.runs.submit_tool_outputs(
                     thread_id = st.session_state.thread.id,
-                    assistant_id = assistant.id,
                     run_id = run.id,
                     tool_outputs = [
                         {
