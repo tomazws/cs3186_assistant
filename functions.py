@@ -7,7 +7,7 @@ import pydot
 ##                        CUSTOM FUNCTIONS FOR OPENAI                         ##
 ################################################################################
 def removeAutomathonFormat(string):
-  return string.replace('[', '').replace(']', '').replace('\'', '').replace(', ', '')
+    return string.replace('[', '').replace(']', '').replace('\'', '').replace(', ', '')
 
 def nfa_to_dfa(dot_script):
     # Create NFA from dot script
