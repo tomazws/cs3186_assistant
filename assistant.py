@@ -143,5 +143,5 @@ if st.sidebar.button('Generate a DFA diagram'):
 if prompt := st.chat_input('Ask me anything about CS 3186'):
     # Display user message in chat message container and add to chat history
     displayMessage('user', prompt)
-    st.session_state.messages.append({'role': 'user', 'content': prompt, 'file_ids': [file.id]})
+    st.session_state.messages.append({'role': 'user', 'content': prompt})
     getCompletion(prompt)
