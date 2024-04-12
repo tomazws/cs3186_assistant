@@ -140,6 +140,7 @@ if st.sidebar.button('Generate a DFA diagram'):
     getCompletion(message)
 
 my_assistant = client.beta.assistants.retrieve("file-X8aHnPO1dOTwpUCrWDTFJ0Wi")
+st.write('asdf')
 st.write(my_assistant)
 
 # Chat input
