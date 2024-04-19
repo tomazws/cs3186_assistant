@@ -86,14 +86,9 @@ def getCompletion(prompt):
                 st.text('arguments:')
                 st.text(args)
                 # Call function
-                # response = globals()[function](**args)
-                states, sigma, delta, initial_state, finals = globals()[function](**args)
+                response = globals()[function](**args)
                 st.text('Response from function:')
-                st.text(states)
-                st.text(sigma)
-                st.text(delta)
-                st.text(initial_state)
-                st.text(finals)
+                st.text(response)
 
                 # Submit output from function call
                 run = client.beta.threads.runs.submit_tool_outputs(
