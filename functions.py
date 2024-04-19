@@ -56,11 +56,11 @@ def nfa_to_dfa(dot_script):
             if label not in sigma:
                 sigma.add(label)
 
+    return states, sigma, delta, initial_state, finals
+
     # Create NFA object and convert to DFA
     automathonNFA = NFA(states, sigma, delta, initial_state, finals)
     automathonDFA = automathonNFA.get_dfa()
-
-    return automathonNFA, automathonDFA
 
     # Parse DFA objects to convert to dot script
     states = {removeAutomathonFormat(state) for state in automathonDFA.q}
