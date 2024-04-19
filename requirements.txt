@@ -1,4 +1,4 @@
 openai
 graphviz
 pydot
-automathon
+automathon==0.0.14
