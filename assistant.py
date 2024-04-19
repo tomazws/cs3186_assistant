@@ -83,12 +83,10 @@ def getCompletion(prompt):
                 function = tool_call.function.name
                 args = json.loads(tool_call.function.arguments)
 
-                st.text('arguments:')
-                st.text(args)
                 # Call function
                 response = globals()[function](**args)
-                st.text('Response from function:')
-                st.text(response)
+                # st.text('Response from function:')
+                # st.text(response)
 
                 # Submit output from function call
                 run = client.beta.threads.runs.submit_tool_outputs(
