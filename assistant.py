@@ -27,13 +27,6 @@ if 'thread' not in st.session_state:
         }
     )
 
-assistant = client.beta.assistants.create(
-    name="CS 3186 Assistant Chatbot",
-    instructions="You are a merger and takeover specialist chatbot. Use your knowledge base to best respond to queries related to mergers and takeovers. Pls be precise",
-    model="gpt-3.5-turbo-1106",
-    tools=[{"type": "retrieval"}],
-    file_ids=['file-X8aHnPO1dOTwpUCrWDTFJ0Wi', 'file-CunM4s05ZDFeRWEmzKSL6zyB']
-)
 
 
 if 'messages' not in st.session_state:
