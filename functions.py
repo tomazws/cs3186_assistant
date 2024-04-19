@@ -58,9 +58,6 @@ def nfa_to_dfa(dot_script):
 
     # Create NFA object and convert to DFA
     automathonNFA = NFA(states, sigma, delta, initial_state, finals)
-
-    return automathonNFA
-    
     automathonDFA = automathonNFA.get_dfa()
 
     # Parse DFA objects to convert to dot script
