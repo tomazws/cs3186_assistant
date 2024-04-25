@@ -52,7 +52,7 @@ def displayMessage(role, content):
                 # message = re.sub(r'\\\((.*?)\\\)', r'$\1$', message)
                 # message = re.sub(r'\\\[(.*?)\\\]', r'$\1$', message)
                 message = re.sub(r'\\\((.*?)\\\)|\\\[(.*?)\\\]', r'$\1$', message)
-                st.write(message)
+                st.text(message)
     st.write('')
 
 def getCompletion(prompt):
