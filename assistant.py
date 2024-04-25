@@ -51,6 +51,7 @@ def displayMessage(role, content):
                 message = message[match.start():]
                 st.graphviz_chart(message)
             else:
+                message = re.sub(r'\\((.*?)\\)', r'~!\1!', message)
                 st.write(message)
     st.write('')
 
