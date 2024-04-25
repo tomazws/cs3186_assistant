@@ -51,7 +51,7 @@ def displayMessage(role, content):
                 # GPT4 Turbo responses LaTeX math wrapped in \( \) and \[ \] instead of $ $, so we need to convert it
                 # message = re.sub(r'\\\((.*?)\\\)', r'$\1$', message)
                 # message = re.sub(r'\\\[(.*?)\\\]', r'$\1$', message)
-                message = re.sub(r'\\\(|\\\)|\\\[\\\]', r'$', message)
+                message = re.sub(r'\\\(|\\\)|\\\[\\\]', '$', message)
                 st.text(message)
     st.write('')
 
