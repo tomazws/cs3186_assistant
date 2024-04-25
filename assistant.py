@@ -39,9 +39,6 @@ if 'messages' not in st.session_state:
 def displayMessage(role, content):
     st.text(content)
     with st.chat_message(role):
-
-        st.write(f"The pythagorean theorem is given by the equation $V$.")
-        
         # Split the message by code blocks
         messages = content.split('```')
         for message in messages:
