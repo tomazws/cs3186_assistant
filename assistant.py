@@ -37,7 +37,7 @@ if 'messages' not in st.session_state:
 ################################################################################
 # Process the messsage and display it in the chat message container and also append message to chat history
 def displayMessage(role, content):
-    st.text(content)
+    # st.text(content)
     with st.chat_message(role):
         # Split the message by code blocks
         messages = content.split('```')
@@ -48,7 +48,10 @@ def displayMessage(role, content):
                 message = message[match.start():]
                 st.graphviz_chart(message)
             else:
-                message = re.sub(r'\\\((.*?)\\\)', r'$\1$', message)
+                # GPT4 Turbo responses LaTeX math wrapped in \( \) and \[ \] instead of $ $, so we need to convert it
+                # message = re.sub(r'\\\((.*?)\\\)', r'$\1$', message)
+                # message = re.sub(r'\\\[(.*?)\\\]', r'$\1$', message)
+                message = re.sub(r'(\\\((.*?)\\\)|\\\[(.*?)\\\])', r'$\1$', message)
                 st.write(message)
     st.write('')
 
