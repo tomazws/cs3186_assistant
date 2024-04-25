@@ -49,7 +49,7 @@ def displayMessage(role, content):
                 st.graphviz_chart(message)
             else:
                 message = re.sub(r'\\\((.*?)\\\)', r'$\1$', message)
-                st.text(message)
+                st.write(message)
     st.write('')
 
 def getCompletion(prompt):
