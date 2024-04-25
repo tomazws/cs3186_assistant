@@ -49,7 +49,7 @@ def displayMessage(role, content):
                 st.graphviz_chart(message)
             else:
                 # GPT4 Turbo responses LaTeX math wrapped in \( \) and \[ \] instead of $ $, so we need to convert it
-                message = re.sub(r'\\\(|\\\)|\\\[\\\]', '$', message)
+                message = re.sub(r'\\\(|\\\)|\\\[|\\\]', '$', message)
                 st.write(message)
     st.write('')
 
