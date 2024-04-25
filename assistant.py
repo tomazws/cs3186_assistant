@@ -40,7 +40,7 @@ def displayMessage(role, content):
     st.text(content)
     with st.chat_message(role):
 
-        latex_expr = '''\(V = \{S, A, B\}\)'''
+        latex_expr = '\(V = \{S, A, B\}\)'
         st.write(f"The pythagorean theorem is given by the equation ${latex_expr}$.")
         
         # Split the message by code blocks
