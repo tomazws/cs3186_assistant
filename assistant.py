@@ -40,20 +40,7 @@ def displayMessage(role, content):
     st.text(content)
     with st.chat_message(role):
 
-        latex_expr = '''The question IV you're referring to on HW assignment 2 is about writing derivations for four strings of various lengths and describing the language generated, \(L(G)\), by the following grammar \(G\):
-
-- \(V = \{S, A, B\}\)
-- \(T = \{a, b\}\),
-- Production rules \((P)\) are:
-  - \(S \rightarrow A\)
-  - \(S \rightarrow B\)
-  - \(B \rightarrow bB\)
-  - \(A \rightarrow aA\)
-  - \(A \rightarrow \lambda\)
-  - \(B \rightarrow \lambda\)
-- \(S\) is the start nonterminal【4:0†HW 02.pdf】.
-
-Can you confirm this is the right problem?'''
+        latex_expr = '''\(V = \{S, A, B\}\)'''
         st.write(f"The pythagorean theorem is given by the equation ${latex_expr}$.")
         
         # Split the message by code blocks
